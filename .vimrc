@@ -48,6 +48,6 @@ noremap <leader>r "0y:%s/<c-r>0//g<left><left>
 "   <left>  cursor left to let user insert search/replacement
 vnoremap <leader>vr :s/\%v<left><left>
 
-" CTRL+a copy whole document
+" CTRL+a select whole document
 noremap <c-a> ggVG
 
