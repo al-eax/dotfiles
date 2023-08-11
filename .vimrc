@@ -51,3 +51,5 @@ vnoremap <leader>vr :s/\%v<left><left>
 " CTRL+a select whole document
 noremap <c-a> ggVG
 
+" redo last undo
+noremap U <C-R>
