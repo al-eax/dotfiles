@@ -48,8 +48,15 @@ noremap <leader>r "0y:%s/<c-r>0//g<left><left>
 "   <left>  cursor left to let user insert search/replacement
 vnoremap <leader>vr :s/\%v<left><left>
 
+" search 
+noremap <leader>f /
+
 " CTRL+a select whole document
 noremap <c-a> ggVG
 
-" redo last undo
+" use U redo last undo
 noremap U <C-R>
+
+" center arount cursor after CTRL+u/d
+noremap <c-d> <c-d>zz
+noremap <c-u> <c-u>zz
