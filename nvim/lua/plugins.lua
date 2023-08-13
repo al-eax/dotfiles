@@ -10,6 +10,8 @@ local ensure_packer = function()
     return false
 end
 
+
+
 local packer_bootstrap = ensure_packer()
 
 return require('packer').startup(function(use)
@@ -27,10 +29,10 @@ return require('packer').startup(function(use)
         requires = {{'nvim-lua/plenary.nvim'}}
     }
     
- 
+    -- Install tokyonight theme
     use 'folke/tokyonight.nvim'
 
-	
+    -- Install nvim-tree file explorer
     use {
 	    'nvim-tree/nvim-tree.lua',
 	    requires = {

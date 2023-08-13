@@ -1,12 +1,16 @@
 set number relativenumber
 set nu rnu
 set cursorline
-
+" cursor offset 4 to top and bottom
+set scrolloff=9999
 " use system clipboard
 set clipboard=unnamedplus
 set clipboard+=unnamed
 " windows
 set paste
+
+" set tap to 4 spaces
+set ts=4 sw=4
 
 
 hi cursorline cterm=none term=none
@@ -17,7 +21,7 @@ highlight cursorline guibg=#303000 ctermbg=234
 let mapleader = " "
 
 nmap <leader>q :q<cr>
-nmap <c-s> :w<cr>
+nmap <c-s> :w<cr><esc>
 
 " paste text and dont store deleted text in register (clipboard)
 " "_    black hohle register
@@ -36,7 +40,6 @@ noremap dd "_dd
 "   /       let user insert text replacement
 "   /g      search and replace globally
 "   <left>  move cursor left to let user insert replacement
-
 noremap <leader>r "0y:%s/<c-r>0//g<left><left>
 
 " <leader>vr search & replace only in visualy selected text
@@ -46,10 +49,12 @@ noremap <leader>r "0y:%s/<c-r>0//g<left><left>
 "           let user insert text to replace
 "   /g      search globally
 "   <left>  cursor left to let user insert search/replacement
-vnoremap <leader>vr :s/\%v<left><left>
+vnoremap <leader>vr :s/\%v<left><ljeft>
 
-" search 
-noremap <leader>f /
+" STRG-f search 
+noremap <c-f> /
+" STRG-r replace
+noremap <c-r> :%s/
 
 " CTRL+a select whole document
 noremap <c-a> ggVG
@@ -57,6 +62,22 @@ noremap <c-a> ggVG
 " use U redo last undo
 noremap U <C-R>
 
-" center arount cursor after CTRL+u/d
-noremap <c-d> <c-d>zz
-noremap <c-u> <c-u>zz
+
+" up and down movements and center screen
+nnoremap J 10j
+nnoremap K 10k
+
+nnoremap H 10h
+nnoremap L 10l
+
+" switch tabs
+nnoremap <C-h> gT
+nnoremap <C-l> gt
+nnoremap <C-j> gT
+nnoremap <C-k> gt
+
+
+" exit vim
+noremap <leader>Q :q!<enter>
+
+noremap <leader>t :tabnew<enter>
