@@ -12,6 +12,12 @@ set paste
 " set tap to 4 spaces
 set ts=4 sw=4
 
+" when searching: this adds /g flag by default to search globally
+" /foo -> /foo/g
+" in VSCode enable vim.gdefault
+set gdefault
+
+:hi SpecialKey ctermfg=darkgray guifg=gray70
 
 hi cursorline cterm=none term=none
 autocmd winenter * setlocal cursorline
@@ -19,6 +25,14 @@ autocmd winleave * setlocal nocursorline
 highlight cursorline guibg=#303000 ctermbg=234
 
 let mapleader = " "
+
+" REMAPPINGS
+" map: recursive mapping
+" noremap: non recursive mapping in normal, visual, selection mode
+" nnorremap: NORMAL MODE non recursive mapping
+" vnorremap: VISUAL/SELECT MODE non recursive mapping
+" xnorremap: VISUAL MODE non recursive mapping
+" xnorremap: VISUAL MODE non recursive mapping
 
 nmap <leader>q :q<cr>
 nmap <c-s> :w<cr><esc>
@@ -40,21 +54,31 @@ noremap dd "_dd
 "   /       let user insert text replacement
 "   /g      search and replace globally
 "   <left>  move cursor left to let user insert replacement
-noremap <leader>r "0y:%s/<c-r>0//g<left><left>
+" noremap <leader>r "0y:%s/<c-r>0//g<left><left>
 
-" <leader>vr search & replace only in visualy selected text
-"   :s/     search
-"   \%v     only in visualy selected text
-"           let user insert text to search
-"           let user insert text to replace
-"   /g      search globally
-"   <left>  cursor left to let user insert search/replacement
-vnoremap <leader>vr :s/\%v<left><ljeft>
+" <leader>r search & replace only in visualy selected text
+" if text is selected, vim automatically addrs :<','> to commant prompt
+" this restricts the search&replace operation to selected text 
+vnoremap <leader>r :s/
 
+" <leader>f search only in selected text
+" <esc> switch back to normal mode
+" /     search
+" \%V   only in visual selection
+vnoremap <leader>f <esc>/\%V
 " STRG-f search 
-noremap <c-f> /
+nnoremap <c-f> /
 " STRG-r replace
-noremap <c-r> :%s/
+nnoremap <c-r> :%s/
+
+
+" STRG-f in visual mode: search for selected text
+" "0y   copy selected text to register 0
+" /     open search bar
+" <c-r>0 paste register 0    
+vnoremap <c-f> "0y/<c-r>0
+" STRG+r in visual mode: search & replace for selected text
+vnoremap <c-r> "0y:%s/<c-r>0//g<left><left>
 
 " CTRL+a select whole document
 noremap <c-a> ggVG
@@ -64,11 +88,11 @@ noremap U <C-R>
 
 
 " up and down movements and center screen
-nnoremap J 10j
-nnoremap K 10k
+noremap J 10j
+noremap K 10k
 
-nnoremap H 10h
-nnoremap L 10l
+noremap H 10h
+noremap L 10l
 
 " switch tabs
 nnoremap <C-h> gT
