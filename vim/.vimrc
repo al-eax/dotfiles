@@ -94,14 +94,24 @@ noremap K 10k
 noremap H 10h
 noremap L 10l
 
-" switch tabs
-nnoremap <C-h> gT
-nnoremap <C-l> gt
-nnoremap <C-j> gT
-nnoremap <C-k> gt
+" switch tabs, switch to normal mode
+noremap <C-h> gT
+noremap <C-l> gt
+noremap <C-j> gT
+noremap <C-k> gt
 
 
 " exit vim
 noremap <leader>Q :q!<enter>
 
 noremap <leader>t :tabnew<enter>
+
+
+noremap <Up> <Nop>
+noremap <Down> <Nop>
+noremap <Left> <Nop>
+noremap <Right> <Nop>
+
+
+nnoremap Q q
+nnoremap q <Nop>
