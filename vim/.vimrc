@@ -115,3 +115,7 @@ noremap <Right> <Nop>
 
 nnoremap Q q
 nnoremap q <Nop>
+
+nnoremap m m>
+nnoremap M '>
+nnoremap dm d'>
