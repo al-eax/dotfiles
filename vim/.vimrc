@@ -41,7 +41,7 @@ nmap <c-s> :w<cr><esc>
 " "_    black hohle register
 " d     delete selection
 " p     paste selection
-xnoremap p "_dPc
+xnoremap p "_dpc
 
 " deleted text will not be stored in register (clipboard)
 noremap d "_d
@@ -121,3 +121,5 @@ nnoremap @ @1
 nnoremap m mA
 nnoremap M 'A
 nnoremap dm d'A
+
+
