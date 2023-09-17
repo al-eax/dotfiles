@@ -122,4 +122,8 @@ nnoremap m mA
 nnoremap M 'A
 nnoremap dm d'A
 
-
+" allow movement in insert mode
+inoremap <A-h> <Left>
+inoremap <A-j> <Down>
+inoremap <A-k> <Up>
+inoremap <A-l> <Right>
