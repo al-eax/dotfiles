@@ -127,3 +127,5 @@ inoremap <A-h> <Left>
 inoremap <A-j> <Down>
 inoremap <A-k> <Up>
 inoremap <A-l> <Right>
+
+inoremap <A> <ESC>
