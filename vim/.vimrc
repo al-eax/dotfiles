@@ -128,4 +128,5 @@ inoremap <A-j> <Down>
 inoremap <A-k> <Up>
 inoremap <A-l> <Right>
 
-inoremap <A> <ESC>
+" switch from insert to normal via 'jk' 
+inoremap jk <ESC>
