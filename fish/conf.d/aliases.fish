@@ -15,7 +15,7 @@ alias venvc='python3 -m venv ./.venv'
 alias venva='source ./.venv/bin/activate.fish'
 alias venvd='deactivate'
 
-# tmux
+#etmux
 alias ta='tmux attach -t'
 alias ts='tmux new -s'
 alias tls='tmux ls'

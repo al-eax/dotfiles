@@ -129,4 +129,7 @@ inoremap <A-k> <Up>
 inoremap <A-l> <Right>
 
 " switch from insert to normal via 'jk' 
-inoremap jk <ESC>
+imap jj <ESC>
+imap öö <ESC>
+" set no paste to make jj and öö work https://superuser.com/a/1495478
+set nopaste
