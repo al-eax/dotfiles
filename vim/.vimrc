@@ -2,7 +2,7 @@ set number relativenumber
 set nu rnu
 set cursorline
 " cursor offset 4 to top and bottom
-set scrolloff=9999
+set scrolloff=7
 " use system clipboard
 set clipboard=unnamedplus
 set clipboard+=unnamed
@@ -10,7 +10,13 @@ set clipboard+=unnamed
 set paste
 
 " set tap to 4 spaces
-set ts=4 sw=4
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set autoindent
+
+" disable swap files
+set noswapfile
 
 " when searching: this adds /g flag by default to search globally
 " /foo -> /foo/g
