@@ -1,3 +1,6 @@
+-- plugins are installed here
+-- run :PackerSync to install packages
+-- packer is the plugin manager that downloads and loads plugins for nvim
 -- see https://github.com/wbthomason/packer.nvim
 local ensure_packer = function()
     local fn = vim.fn
@@ -28,6 +31,10 @@ return require('packer').startup(function(use)
         tag = '0.1.x',
         requires = {{'nvim-lua/plenary.nvim'}}
     }
+
+	-- install web-dev icons
+	use 'nvim-tree/nvim-web-devicons'
+
     
     -- Install tokyonight theme
     use 'folke/tokyonight.nvim'
@@ -43,7 +50,30 @@ return require('packer').startup(function(use)
 		    require("nvim-tree").setup {}
 	    end
     }
- 
+
+  -- treesitter for source code parsing/AST building
+   use {
+        'nvim-treesitter/nvim-treesitter',
+        run = function()
+            local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
+            ts_update()
+        end,
+    }
+
+	-- LSP plugins
+	use 'neovim/nvim-lspconfig' -- Collection of configurations for built-in LSP client
+	use 'hrsh7th/nvim-cmp' -- Autocompletion plugin
+	use 'hrsh7th/cmp-nvim-lsp' -- LSP source for nvim-cmp
+	use 'saadparwaiz1/cmp_luasnip' -- Snippets source for nvim-cmp
+	use 'L3MON4D3/LuaSnip' -- Snippets plugin
+	
+
+	-- statusbar
+	use {
+	  'nvim-lualine/lualine.nvim',
+	  requires = { 'nvim-tree/nvim-web-devicons', opt = true }
+	}
+
     -- Automatically set up your configuration after cloning packer.nvim
     -- Put this at the end after all plugins
     if packer_bootstrap then
