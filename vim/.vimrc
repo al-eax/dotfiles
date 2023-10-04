@@ -139,3 +139,5 @@ imap jj <ESC>
 imap öö <ESC>
 " set no paste to make jj and öö work https://superuser.com/a/1495478
 set nopaste
+
+nnoremap <BS> X
