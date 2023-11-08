@@ -43,15 +43,20 @@ let mapleader = " "
 nmap <leader>q :q<cr>
 nmap <c-s> :w<cr><esc>
 
-" paste text and dont store deleted text in register (clipboard)
-" "_    black hohle register
-" d     delete selection
-" p     paste selection
-xnoremap p "_dpc
+" delete into black hole register
+" nnoremap x "_x
+nnoremap d "_d
+nnoremap D "_D
+vnoremap d "_d
+" delete into system register
+nnoremap <leader>d "*d
+nnoremap <leader>D "*D
+vnoremap <leader>d "*d
 
-" deleted text will not be stored in register (clipboard)
-noremap d "_d
-noremap dd "_dd
+" press vv to select the whole Line
+nnoremap vv V
+
+
 
 " <leader>r search&replace the visualy selected text
 "   "0y       yank selected text to register 0
