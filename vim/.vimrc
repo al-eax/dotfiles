@@ -57,17 +57,6 @@ vnoremap <leader>d "*d
 nnoremap vv V
 
 
-
-" <leader>r search&replace the visualy selected text
-"   "0y       yank selected text to register 0
-"   :       enter command
-"   %s/     search
-"   <c-r>0  paste content register 0 to search for 
-"   /       let user insert text replacement
-"   /g      search and replace globally
-"   <left>  move cursor left to let user insert replacement
-" noremap <leader>r "0y:%s/<c-r>0//g<left><left>
-
 " <leader>r search & replace only in visualy selected text
 " if text is selected, vim automatically addrs :<','> to commant prompt
 " this restricts the search&replace operation to selected text 
@@ -129,9 +118,9 @@ nnoremap Q q1
 nnoremap q <Nop>
 nnoremap @ @1    
 
-nnoremap m mA
-nnoremap M 'A
-nnoremap dm d'A
+" use M to togo marked line
+nnoremap M '
+nnoremap dm d'
 
 " allow movement in insert mode
 inoremap <A-h> <Left>
@@ -145,4 +134,4 @@ imap öö <ESC>
 " set no paste to make jj and öö work https://superuser.com/a/1495478
 set nopaste
 
-nnoremap <BS> X
+nnoremap <BS> "_X
