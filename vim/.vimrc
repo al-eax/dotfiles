@@ -9,6 +9,8 @@ set clipboard+=unnamed
 " windows
 set paste
 
+" test
+
 " set tap to 4 spaces
 set tabstop=4
 set softtabstop=4
@@ -128,10 +130,7 @@ inoremap <A-j> <Down>
 inoremap <A-k> <Up>
 inoremap <A-l> <Right>
 
-" switch from insert to normal via 'jk' 
-imap jj <ESC>
-imap öö <ESC>
-" set no paste to make jj and öö work https://superuser.com/a/1495478
-set nopaste
-
+" backspace
 nnoremap <BS> "_X
+vnoremap <BS> "_X
+
