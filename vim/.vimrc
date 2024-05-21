@@ -123,6 +123,7 @@ nnoremap @ @1
 " use M to togo marked line
 nnoremap M '
 nnoremap dm d'
+nnoremap <C-m> :marks<enter> "CRTL+m  show all marks
 
 " allow movement in insert mode
 inoremap <A-h> <Left>
