@@ -36,8 +36,8 @@ return require('packer').startup(function(use)
 	use 'nvim-tree/nvim-web-devicons'
 
     
-    -- Install tokyonight theme
-    use 'folke/tokyonight.nvim'
+    -- install theme
+    use { "catppuccin/nvim", as = "catppuccin" }
 
     -- Install nvim-tree file explorer
     use {
@@ -60,13 +60,27 @@ return require('packer').startup(function(use)
         end,
     }
 
-	-- LSP plugins
-	use 'neovim/nvim-lspconfig' -- Collection of configurations for built-in LSP client
-	use 'hrsh7th/nvim-cmp' -- Autocompletion plugin
-	use 'hrsh7th/cmp-nvim-lsp' -- LSP source for nvim-cmp
-	use 'saadparwaiz1/cmp_luasnip' -- Snippets source for nvim-cmp
-	use 'L3MON4D3/LuaSnip' -- Snippets plugin
-	
+	-- nvim-cmp LSP & auto completion
+    use 'neovim/nvim-lspconfig'
+    use 'hrsh7th/cmp-nvim-lsp'
+    use 'hrsh7th/cmp-buffer'
+    use 'hrsh7th/cmp-path'
+    use 'hrsh7th/cmp-cmdline'
+    use 'hrsh7th/nvim-cmp'
+    use { 'L3MON4D3/LuaSnip' }
+    use 'saadparwaiz1/cmp_luasnip'
+    use {
+        'VonHeikemen/lsp-zero.nvim',
+        branch = 'v3.x',
+        requires = {
+            {'williamboman/mason.nvim'},
+            {'williamboman/mason-lspconfig.nvim'},
+            {'neovim/nvim-lspconfig'},
+            {'hrsh7th/nvim-cmp'},
+            {'hrsh7th/cmp-nvim-lsp'},
+            {'L3MON4D3/LuaSnip'},
+        }
+    }
 
 	-- statusbar
 	use {
