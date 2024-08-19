@@ -27,8 +27,7 @@ return require('packer').startup(function(use)
 
     -- Install Telescope for file search 
     use {
-        'nvim-telescope/telescope.nvim',
-        tag = '0.1.x',
+        'nvim-telescope/telescope.nvim',tag = '0.1.8',
         requires = {{'nvim-lua/plenary.nvim'}}
     }
 
@@ -71,7 +70,6 @@ return require('packer').startup(function(use)
     use 'saadparwaiz1/cmp_luasnip'
     use {
         'VonHeikemen/lsp-zero.nvim',
-        branch = 'v3.x',
         requires = {
             {'williamboman/mason.nvim'},
             {'williamboman/mason-lspconfig.nvim'},
@@ -81,7 +79,7 @@ return require('packer').startup(function(use)
             {'L3MON4D3/LuaSnip'},
         }
     }
-
+  use 'WhoIsSethDaniel/mason-tool-installer.nvim'
 	-- statusbar
 	use {
 	  'nvim-lualine/lualine.nvim',
@@ -93,6 +91,7 @@ return require('packer').startup(function(use)
   use 'mfussenegger/nvim-dap'
   use 'mfussenegger/nvim-dap-python'
   use 'rcarriga/nvim-dap-ui'
+  use 'theHamsta/nvim-dap-virtual-text'
 
   -- harpoon
   use "nvim-lua/plenary.nvim" -- don't forget to add this one if you don't have it yet!

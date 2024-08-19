@@ -49,6 +49,15 @@ o.shiftwidth = 2
 
 vim.cmd.colorscheme "catppuccin"
 
+local is_windows = vim.fn.has("win64") == 1 or vim.fn.has("win32") == 1 or vim.fn.has("win16") == 1
+vim.g.is_windows = is_windows
+if is_windows then
+    vim.g.os = "Windows"
+else
+    local uname_output = vim.fn.system('uname')
+    vim.g.os = string.gsub(uname_output, '\n', '')
+end
+
 
 -- auto sync plugins via packer
 vim.cmd([[
@@ -73,6 +82,7 @@ require 'nvim-treesitter.configs'.setup {
 
   -- Install parsers synchronously (only applied to `ensure_installed`)
   sync_install = false,
+  compilers = { 'zig' }, -- TODO only on windows!
 
   -- Automatically install missing parsers when entering buffer
   -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
@@ -84,13 +94,7 @@ require 'nvim-treesitter.configs'.setup {
   highlight = {
     enable = true,
 
-    disable = function(lang, buf)
-      local max_filesize = 100 * 1024 -- 100 KB
-      local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-      if ok and stats and stats.size > max_filesize then
-        return true
-      end
-    end,
+   
 
       -- Using this option may slow down your editor, and you may see some duplicate highlights.
     -- Instead of true it can also be a list of languages
@@ -103,8 +107,14 @@ require 'nvim-treesitter.configs'.setup {
 
 -- ## debugger
 -- TODO write function to get python on windows
-local mason_python_path = "~/.local/share/nvim/mason/packages/debugpy/venv/bin/python3"
-require("dap-python").setup(mason_python_path)
+if vim.g.is_windows then
+  local mason_python_path = [[C:\Users\ahh\AppData\Local\nvim-data\mason\packages\debugpy\venv\Scripts\python.exe]]
+  require("dap-python").setup(mason_python_path)
+else
+  local mason_python_path = "~/.local/share/nvim/mason/packages/debugpy/venv/bin/python3"
+  require("dap-python").setup(mason_python_path)
+end
+
 
 local dap = require("dap")
 local dapui = require("dapui")
@@ -119,18 +129,23 @@ end
 dap.listeners.before.event_exited["dapui_config"] = function()
   dapui.close()
 end
+
+require("nvim-dap-virtual-text").setup()
+
 -- end debugger
 -- ## configure lualine
 
 local lualine = require('lualine')
-lualine.setup()
+lualine.setup({{
+ "filename",path = 1
+}})
 
 -- end lualine
 
 
 -- ## LSP configuration
 
-vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
+vim.opt.completeopt = {}
 
 local lsp_zero = require('lsp-zero')
 
@@ -138,26 +153,60 @@ lsp_zero.on_attach(function(client, bufnr)
   lsp_zero.default_keymaps({ buffer = bufnr })
 end)
 
+
+
+
+
 require('mason').setup({
   ensure_installed = {"debugpy"}
 })
+
 require('mason-lspconfig').setup({
-  ensure_installed = { "lua_ls", "pyright"},
   handlers = {
     function(server_name)
       require('lspconfig')[server_name].setup({})
     end,
-
     lua_ls = function()
-      -- (Optional) configure lua language server
-      local lua_opts = lsp_zero.nvim_lua_ls()
-      require('lspconfig').lua_ls.setup(lua_opts)
-    end,
+      require('lspconfig').lua_ls.setup({
+        settings = {
+          Lua = {}
+        },
+        on_init = function(client)
+          local uv = vim.uv or vim.loop
+          local path = client.workspace_folders[1].name
 
-  }
+          -- Don't do anything if there is a project local config
+          if uv.fs_stat(path .. '/.luarc.json') 
+            or uv.fs_stat(path .. '/.luarc.jsonc')
+          then
+            return
+          end
+          
+          -- Apply neovim specific settings
+          local lua_opts = lsp_zero.nvim_lua_ls()
+
+          client.config.settings.Lua = vim.tbl_deep_extend(
+            'force',
+            client.config.settings.Lua,
+            lua_opts.settings.Lua
+          )
+        end,
+      })
+    end,
+  },
 })
 
+require('mason-tool-installer').setup {
+  run_on_start = true,
+  ensure_installed = {
+    'debugpy',
+    'lua_ls',
+    'pyright',
+  }
+}
+
 lsp_zero.setup() -- Make sure to finalize the LSP setup
+
 
 -- ## nvim-cmp auto completion
 local cmp = require('cmp')
@@ -246,10 +295,44 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
 -- Telescope
 local builtin = require('telescope.builtin')
-vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
-vim.keymap.set('n', '<leader>fg', builtin.live_grep, {}) -- requred sudo apt-get install ripgrep
+local ff = function()
+  local _builtin = require('telescope.builtin')
+  _builtin.find_files({no_ignore=true})
+end
+vim.keymap.set('n', '<leader>ff', ff, {})
+vim.keymap.set('n', '<leader>fg', builtin.live_grep, {}) -- requred sudo apt-get install ripgrep on windows chkoco install ripgrep
 vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
+
+local actions = require("telescope.actions")
+require('telescope').setup{
+  defaults = {
+    -- Default configuration for telescope goes here:
+    -- config_key = value,
+    mappings = {
+      i = {
+                ["<C-j>"] = actions.move_selection_next, -- move to next result
+                ["<C-k>"] = actions.move_selection_previous, -- move to prev result
+                ["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist, -- send selected to quickfixlist
+                ["<esc>"] = actions.close,
+                ["<CR>"] = actions.select_default + actions.center,
+            },
+      n = {
+          ["<C-j>"] = actions.move_selection_next,
+          ["<C-k>"] = actions.move_selection_previous,
+          ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
+      },
+    },
+    find_command = {
+            "rg",
+            "--no-heading",
+            "--with-filename",
+            "--line-number",
+            "--column",
+            "--smart-case",
+        },
+  },
+}
 
 -- nvim-tree
 vim.keymap.set('n', '<leader>e', ":NvimTreeToggle<CR>") -- open file explorer by SPACE+e
@@ -299,3 +382,23 @@ vim.keymap.set("n", "<esc>", "<esc>:noh<CR>", { noremap = true })
 -- switch bufferts
 vim.keymap.set({ "n", "v" }, "<c-s-j>", ":bprev<cr>")
 vim.keymap.set({ "n", "v" }, "<c-s-k>", ":bnext<cr>")
+
+
+vim.keymap.set("n", "<leader>w", "<C-W>")
+
+
+-- macro recording
+vim.keymap.set("n", "Q", "q1")
+vim.keymap.set("n", "@", "@1",{noremap = true})
+
+
+
+-- Debugging Keymaps
+
+vim.keymap.set("n", "<leader>db" , ":lua require'dap'.toggle_breakpoint()")
+vim.keymap.set("n", "<leader>dc" , ":lua require'dap'.continue()")
+vim.keymap.set("n", "F5" , ":lua require'dap'.continue()")
+vim.keymap.set("n", "F10" , ":lua require'dap'.step_over()")
+vim.keymap.set("n", "F11" , ":lua require'dap'.step_into()")
+
+
