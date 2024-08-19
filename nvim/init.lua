@@ -8,6 +8,9 @@ function ReloadConfig()
   vim.notify("Config reloaded!", vim.log.levels.INFO)
 end
 
+-- auto wrap lines
+vim.cmd(":set wrap linebreak nolist")
+
 -- reload config
 vim.api.nvim_create_user_command('ReloadCfg', ReloadConfig, {})
 
@@ -106,7 +109,6 @@ require 'nvim-treesitter.configs'.setup {
 
 
 -- ## debugger
--- TODO write function to get python on windows
 if vim.g.is_windows then
   local mason_python_path = [[C:\Users\ahh\AppData\Local\nvim-data\mason\packages\debugpy\venv\Scripts\python.exe]]
   require("dap-python").setup(mason_python_path)
@@ -395,10 +397,10 @@ vim.keymap.set("n", "@", "@1",{noremap = true})
 
 -- Debugging Keymaps
 
-vim.keymap.set("n", "<leader>db" , ":lua require'dap'.toggle_breakpoint()")
-vim.keymap.set("n", "<leader>dc" , ":lua require'dap'.continue()")
-vim.keymap.set("n", "F5" , ":lua require'dap'.continue()")
-vim.keymap.set("n", "F10" , ":lua require'dap'.step_over()")
-vim.keymap.set("n", "F11" , ":lua require'dap'.step_into()")
+vim.keymap.set("n", "<leader>db" , ":lua require'dap'.toggle_breakpoint()<cr>")
+vim.keymap.set("n", "<leader>dc" , ":lua require'dap'.continue()<cr>")
+vim.keymap.set("n", "<F5>" , ":lua require'dap'.continue()<cr>")
+vim.keymap.set("n", "<F10>" , ":lua require'dap'.step_over()<cr>")
+vim.keymap.set("n", "<F11>" , ":lua require'dap'.step_into()<cr>")
 
 
