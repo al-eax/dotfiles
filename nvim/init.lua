@@ -72,7 +72,11 @@ vim.cmd([[
 
 -- ## Configure nvim-tree
 require("nvim-tree").setup({
-
+  update_focused_file = { -- open path of the current file in tree view
+        enable = true,
+        update_root = false,
+        ignore_list = {},
+      },
 })
 
 -- end nvim-tree
@@ -132,8 +136,17 @@ dap.listeners.before.event_exited["dapui_config"] = function()
   dapui.close()
 end
 
-require("nvim-dap-virtual-text").setup()
+require("nvim-dap-virtual-text").setup({
+commented = true,
+virt_text_pos = "eol"
+})
+-- configure display of breakpoints
+vim.fn.sign_define('DapBreakpoint',{ text ='🟥', texthl ='', linehl ='', numhl =''})
+vim.fn.sign_define('DapStopped',{ text ='▶️', texthl ='', linehl ='', numhl =''})
 
+
+
+--
 -- end debugger
 -- ## configure lualine
 
