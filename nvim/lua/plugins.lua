@@ -96,9 +96,9 @@ return require('packer').startup(function(use)
   use 'tomasky/bookmarks.nvim'
 
   -- comment prompt
-  use 'rcarriga/nvim-notifrcarriga/nvim-notify'
+  use 'rcarriga/nvim-notify'
   use 'MunifTanjim/nui.nvim'
-   use "folke/noice.nvim"
+ use "folke/noice.nvim"
 
     use { -- maximize current window
     'declancm/maximize.nvim',
@@ -113,6 +113,9 @@ return require('packer').startup(function(use)
     requires = { {"nvim-lua/plenary.nvim"} }
   }
 
+use {
+  'rmagatti/auto-session',
+}
 
 use { -- comments
     'numToStr/Comment.nvim',
