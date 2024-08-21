@@ -30,7 +30,7 @@ return require('packer').startup(function(use)
         'nvim-telescope/telescope.nvim',tag = '0.1.8',
         requires = {{'nvim-lua/plenary.nvim'}}
     }
-
+    use "folke/todo-comments.nvim" -- TODO/FIXME
 	-- install web-dev icons
 	use 'nvim-tree/nvim-web-devicons'
 
@@ -95,8 +95,12 @@ return require('packer').startup(function(use)
 
   use 'tomasky/bookmarks.nvim'
 
+  -- comment prompt
+  use 'rcarriga/nvim-notifrcarriga/nvim-notify'
+  use 'MunifTanjim/nui.nvim'
+   use "folke/noice.nvim"
 
-    use {
+    use { -- maximize current window
     'declancm/maximize.nvim',
     config = function() require('maximize').setup() end
     }
@@ -108,6 +112,14 @@ return require('packer').startup(function(use)
     branch = "harpoon2",
     requires = { {"nvim-lua/plenary.nvim"} }
   }
+
+
+use { -- comments
+    'numToStr/Comment.nvim',
+    config = function()
+        require('Comment').setup()
+    end
+}
 
     -- Automatically set up your configuration after cloning packer.nvim
     -- Put this at the end after all plugins
