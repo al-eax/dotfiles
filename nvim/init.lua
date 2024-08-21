@@ -1,6 +1,10 @@
 require('plugins') -- load ./lua/plugins.lua
 
+local is_windows = vim.fn.has("win64") == 1 or vim.fn.has("win32") == 1 or vim.fn.has("win16") == 1
+vim.g.is_windows = is_windows
 
+-- auto wrap lines
+vim.cmd(":set wrap linebreak nolist")
 
 function ReloadConfig()
   -- Reload the init.lua file
@@ -8,8 +12,7 @@ function ReloadConfig()
   vim.notify("Config reloaded!", vim.log.levels.INFO)
 end
 
--- auto wrap lines
-vim.cmd(":set wrap linebreak nolist")
+vim.opt.scrolloff = 10
 
 -- reload config
 vim.api.nvim_create_user_command('ReloadCfg', ReloadConfig, {})
@@ -22,6 +25,7 @@ vim.keymap.set('n', 'P', '"+P')
 
 -- highlight current line
 vim.opt.cursorline = true
+
 -- highlight yanked text for 200ms using the "Visual" highlight group
 vim.api.nvim_create_autocmd('TextYankPost', {
   group = vim.api.nvim_create_augroup('highlight_yank', {}),
@@ -31,15 +35,13 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     vim.highlight.on_yank { higroup = 'IncSearch', timeout = 500 }
   end,
 })
+
 -- ## Keymaps
 vim.g.mapleader = ' ' -- set Space as leader key
 
--- Load existing .vimrc file (loading keybindings)
--- vim.cmd([[
---   set runtimepath^=~/.vim runtimepath+=~/.vim/after
---   let &packpath = &runtimepath
---   source ~/.vimrc
--- ]])
+-- exit Terminal
+vim.keymap.set('t', '<C-w>h', "<C-\\><C-n><C-w>h",{silent = true}) -- exit terminal with <c-w>h
+vim.keymap.set('t', '<esc>', [[<C-\><C-n>]]) -- exit Terminal with esc
 
 -- enable relative numbers
 vim.wo.relativenumber = true
@@ -50,16 +52,8 @@ o.smartindent = true
 o.tabstop = 2
 o.shiftwidth = 2
 
+-- theme
 vim.cmd.colorscheme "catppuccin"
-
-local is_windows = vim.fn.has("win64") == 1 or vim.fn.has("win32") == 1 or vim.fn.has("win16") == 1
-vim.g.is_windows = is_windows
-if is_windows then
-    vim.g.os = "Windows"
-else
-    local uname_output = vim.fn.system('uname')
-    vim.g.os = string.gsub(uname_output, '\n', '')
-end
 
 
 -- auto sync plugins via packer
@@ -71,6 +65,11 @@ vim.cmd([[
 ]])
 
 -- ## Configure nvim-tree
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+-- optionally enable 24-bit colour
+
+vim.opt.termguicolors = true
 require("nvim-tree").setup({
   update_focused_file = { -- open path of the current file in tree view
         enable = true,
@@ -100,10 +99,7 @@ require 'nvim-treesitter.configs'.setup {
 
   highlight = {
     enable = true,
-
-   
-
-      -- Using this option may slow down your editor, and you may see some duplicate highlights.
+    -- Using this option may slow down your editor, and you may see some duplicate highlights.
     -- Instead of true it can also be a list of languages
     additional_vim_regex_highlighting = false,
   },
@@ -137,17 +133,17 @@ dap.listeners.before.event_exited["dapui_config"] = function()
 end
 
 require("nvim-dap-virtual-text").setup({
-commented = true,
-virt_text_pos = "eol"
+  commented = true,
+  virt_text_pos = "eol"
 })
 -- configure display of breakpoints
 vim.fn.sign_define('DapBreakpoint',{ text ='🟥', texthl ='', linehl ='', numhl =''})
 vim.fn.sign_define('DapStopped',{ text ='▶️', texthl ='', linehl ='', numhl =''})
 
 
-
---
 -- end debugger
+
+
 -- ## configure lualine
 
 local lualine = require('lualine')
@@ -160,7 +156,6 @@ lualine.setup({{
 
 -- ## LSP configuration
 
-vim.opt.completeopt = {}
 
 local lsp_zero = require('lsp-zero')
 
@@ -168,9 +163,15 @@ lsp_zero.on_attach(function(client, bufnr)
   lsp_zero.default_keymaps({ buffer = bufnr })
 end)
 
-
-
-
+-- install language servers, debuggers ect.
+require('mason-tool-installer').setup {
+  run_on_start = true,
+  ensure_installed = {
+    'debugpy',
+    'lua_ls',
+    'pyright',
+  }
+}
 
 require('mason').setup({
   ensure_installed = {"debugpy"}
@@ -211,17 +212,9 @@ require('mason-lspconfig').setup({
   },
 })
 
-require('mason-tool-installer').setup {
-  run_on_start = true,
-  ensure_installed = {
-    'debugpy',
-    'lua_ls',
-    'pyright',
-  }
-}
+
 
 lsp_zero.setup() -- Make sure to finalize the LSP setup
-
 
 -- ## nvim-cmp auto completion
 local cmp = require('cmp')
@@ -312,7 +305,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 local builtin = require('telescope.builtin')
 local ff = function()
   local _builtin = require('telescope.builtin')
-  _builtin.find_files({no_ignore=true})
+  _builtin.find_files({no_ignore=true}) -- some py files in cs.workspaces were ignored
 end
 vim.keymap.set('n', '<leader>ff', ff, {})
 vim.keymap.set('n', '<leader>fg', builtin.live_grep, {}) -- requred sudo apt-get install ripgrep on windows chkoco install ripgrep
@@ -348,6 +341,43 @@ require('telescope').setup{
         },
   },
 }
+
+
+-- ## bookmark
+function get_bokmark_dir()
+    return vim.fn.expand "$HOME/.bookmarks"
+end
+
+require('bookmarks').setup {
+  -- sign_priority = 8,  --set bookmark sign priority to cover other sign
+  save_file = get_bokmark_dir(), -- bookmarks save file path
+  keywords =  {
+    ["@t"] = "☑️ ", -- mark annotation startswith @t ,signs this icon as `Todo`
+    ["@w"] = "⚠️ ", -- mark annotation startswith @w ,signs this icon as `Warn`
+    ["@f"] = "⛏ ", -- mark annotation startswith @f ,signs this icon as `Fix`
+    ["@n"] = " ", -- mark annotation startswith @n ,signs this icon as `Note`
+  },
+  on_attach = function(bufnr)
+    local bm = require "bookmarks"
+    local map = vim.keymap.set
+    map("n","mm",bm.bookmark_toggle) -- add or remove bookmark at current line
+    map("n","mi",bm.bookmark_ann) -- add or edit mark annotation at current line
+    map("n","mc",bm.bookmark_clean) -- clean all marks in local buffer
+    map("n","mn",bm.bookmark_next) -- jump to next mark in local buffer
+    map("n","mp",bm.bookmark_prev) -- jump to previous mark in local buffer
+    --map("n","ml",bm.bookmark_list) -- show marked file list in quickfix window
+    map("n","ml",require('telescope').extensions.bookmarks.list) -- show marked file list in quickfix window
+    map("n","mx",bm.bookmark_clear_all) -- removes all bookmarks
+  end
+}
+require('telescope').load_extension('bookmarks')
+
+-- end bookmakt
+
+-- ## indent lines
+require("ibl").setup()
+-- end
+
 
 -- nvim-tree
 vim.keymap.set('n', '<leader>e', ":NvimTreeToggle<CR>") -- open file explorer by SPACE+e
@@ -398,7 +428,7 @@ vim.keymap.set("n", "<esc>", "<esc>:noh<CR>", { noremap = true })
 vim.keymap.set({ "n", "v" }, "<c-s-j>", ":bprev<cr>")
 vim.keymap.set({ "n", "v" }, "<c-s-k>", ":bnext<cr>")
 
-
+-- window functions
 vim.keymap.set("n", "<leader>w", "<C-W>")
 
 
@@ -417,3 +447,6 @@ vim.keymap.set("n", "<F10>" , ":lua require'dap'.step_over()<cr>")
 vim.keymap.set("n", "<F11>" , ":lua require'dap'.step_into()<cr>")
 
 
+-- toggle maximize current window
+vim.keymap.set("n", "<C-z>", ":lua require('maximize').toggle()<CR>")
+vim.keymap.set("n", "<leader>z", ":lua require('maximize').toggle()<CR>")

@@ -93,6 +93,14 @@ return require('packer').startup(function(use)
   use 'rcarriga/nvim-dap-ui'
   use 'theHamsta/nvim-dap-virtual-text'
 
+  use 'tomasky/bookmarks.nvim'
+
+
+    use {
+    'declancm/maximize.nvim',
+    config = function() require('maximize').setup() end
+    }
+    use "lukas-reineke/indent-blankline.nvim"
   -- harpoon
   use "nvim-lua/plenary.nvim" -- don't forget to add this one if you don't have it yet!
   use {
