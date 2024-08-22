@@ -457,8 +457,8 @@ map('n', '<A-7>', '<Cmd>BufferGoto 7<CR>', opts)
 map('n', '<A-8>', '<Cmd>BufferGoto 8<CR>', opts)
 map('n', '<A-9>', '<Cmd>BufferGoto 9<CR>', opts)
 map('n', '<A-0>', '<Cmd>BufferLast<CR>', opts)
-vim.keymap.set("n", "<C-Q>", "<Cmd>BufferClose<CR>")
-vim.keymap.set("n", "<A-Q>", "<Cmd>BufferClose<CR>")
+vim.keymap.set("n", "<C-Q>", "<Cmd>BufferClose!<CR>")
+vim.keymap.set("n", "<A-Q>", "<Cmd>BufferClose!<CR>")
 -- end babar
 
 -- nvim-tree
