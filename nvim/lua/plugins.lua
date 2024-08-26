@@ -85,13 +85,15 @@ return require('packer').startup(function(use)
     'nvim-lualine/lualine.nvim',
     requires = { 'nvim-tree/nvim-web-devicons', opt = true }
   }
-
   -- python debugging
   use 'nvim-neotest/nvim-nio'
   use 'mfussenegger/nvim-dap'
   use 'mfussenegger/nvim-dap-python'
   use 'rcarriga/nvim-dap-ui'
   use 'theHamsta/nvim-dap-virtual-text'
+
+
+use 'folke/trouble.nvim' -- show diagnostics
 
   -- bookmarks
   use 'tomasky/bookmarks.nvim'
@@ -109,18 +111,19 @@ return require('packer').startup(function(use)
   --   requires = { {"nvim-lua/plenary.nvim"} }
   -- }
 
-  use {
+  use { -- session handling
     'rmagatti/auto-session',
   }
 
-  use { -- comments
+  use { -- comments via gc
     'numToStr/Comment.nvim',
     config = function()
       require('Comment').setup()
     end
   }
+  use 'nvim-treesitter/nvim-treesitter-context' -- display current function at top
 
-
+  -- barbar : buffer in tabs
   use 'nvim-tree/nvim-web-devicons' -- OPTIONAL: for file icons
   use 'lewis6991/gitsigns.nvim' -- OPTIONAL: for git status
   use 'romgrk/barbar.nvim'
