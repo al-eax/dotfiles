@@ -6,16 +6,18 @@ vim.g.is_windows = is_windows
 -- auto wrap lines
 vim.cmd(":set wrap linebreak nolist")
 
+vim.opt.scrolloff = 10
+
+
+-- command to reload config
 function ReloadConfig()
   -- Reload the init.lua file
   vim.cmd('source $MYVIMRC')
   vim.notify("Config reloaded!", vim.log.levels.INFO)
 end
-
-vim.opt.scrolloff = 10
-
--- reload config
 vim.api.nvim_create_user_command('ReloadCfg', ReloadConfig, {})
+
+
 
 -- use system clipboard
 vim.api.nvim_set_option("clipboard", "unnamedplus")
@@ -145,6 +147,12 @@ vim.fn.sign_define('DapStopped', { text = '▶', texthl = '', linehl = '', numhl
 
 
 -- end debugger
+
+-- Select color Theme via Telescope
+function SelectColorScheme()
+  vim.cmd("Telescope colorscheme")
+end
+vim.api.nvim_create_user_command('Theme', SelectColorScheme, {})
 
 
 -- ## configure lualine
@@ -337,8 +345,6 @@ vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 local actions = require("telescope.actions")
 require('telescope').setup {
   defaults = {
-    -- Default configuration for telescope goes here:
-    -- config_key = value,
     mappings = {
       i = {
         ["<C-j>"] = actions.move_selection_next,     -- move to next result
@@ -351,14 +357,14 @@ require('telescope').setup {
         ["<C-k>"] = actions.move_selection_previous,
       },
     },
-    find_command = {
-      "rg",
-      "--no-heading",
-      "--with-filename",
-      "--line-number",
-      "--column",
-      "--smart-case",
-    },
+    -- find_command = {
+    --   "rg",
+    --   "--no-heading",
+    --   "--with-filename",
+    --   "--line-number",
+    --   "--column",
+    --   "--smart-case",
+    -- },
   },
 }
 
@@ -390,7 +396,7 @@ require('bookmarks').setup {
     map("n", "mx", bm.bookmark_clear_all)                          -- removes all bookmarks
   end
 }
-require('telescope').load_extension('bookmarks')
+require('telescope').load_extension('bookmarks') -- allow keys "ml" to show bookmarked files in telescope
 
 -- end bookmakt
 
@@ -451,7 +457,6 @@ require 'barbar'.setup {
 }
 
 local map = vim.api.nvim_set_keymap
-local opts = { noremap = true, silent = true }
 
 -- Move to previous/next
 map('n', '<A-,>', '<Cmd>BufferPrevious<CR>', { noremap = true, silent = true, desc = "" })
@@ -478,7 +483,8 @@ vim.keymap.set("n", "<A-q>", "<Cmd>BufferClose!<CR>")
 
 -- top content line: display current function/class
 require 'treesitter-context'.setup {
-  mode = "topline"
+  mode = "topline",
+  max_lines = 10,
 }
 
 
