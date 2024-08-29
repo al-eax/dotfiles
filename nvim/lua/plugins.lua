@@ -18,9 +18,6 @@ end
 local packer_bootstrap = ensure_packer()
 
 return require('packer').startup(function(use)
-  local use = use
-  -- add you plugins here like:
-  -- use 'neovim/nvim-lspconfig'
 
   -- Have packer manage itself
   use 'wbthomason/packer.nvim'
@@ -43,13 +40,11 @@ return require('packer').startup(function(use)
     'nvim-tree/nvim-tree.lua',
     requires = {
       'nvim-tree/nvim-web-devicons', 
-      -- for windows: download & install https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.0/CascadiaCode.zip
     },
     config = function()
       require("nvim-tree").setup {}
     end
   }
-
   -- treesitter for source code parsing/AST building
   use {
     'nvim-treesitter/nvim-treesitter',
@@ -85,7 +80,7 @@ return require('packer').startup(function(use)
     'nvim-lualine/lualine.nvim',
     requires = { 'nvim-tree/nvim-web-devicons', opt = true }
   }
-  -- python debugging
+  -- debugging
   use 'nvim-neotest/nvim-nio'
   use 'mfussenegger/nvim-dap'
   use 'mfussenegger/nvim-dap-python'
@@ -93,23 +88,14 @@ return require('packer').startup(function(use)
   use 'theHamsta/nvim-dap-virtual-text'
 
 
-use 'folke/trouble.nvim' -- show diagnostics
+  use 'folke/trouble.nvim' -- show diagnostics (warnings, errors, hints)
 
   -- bookmarks
   use 'tomasky/bookmarks.nvim'
 
-  -- comment prompt
-  use 'MunifTanjim/nui.nvim'
-  use "folke/noice.nvim"
-
   use "lukas-reineke/indent-blankline.nvim" -- display indent
 
   use "nvim-lua/plenary.nvim" -- don't forget to add this one if you don't have it yet!
-  -- use {
-  --   "ThePrimeagen/harpoon",
-  --   branch = "harpoon2",
-  --   requires = { {"nvim-lua/plenary.nvim"} }
-  -- }
 
   use { -- session handling
     'rmagatti/auto-session',
@@ -121,12 +107,20 @@ use 'folke/trouble.nvim' -- show diagnostics
       require('Comment').setup()
     end
   }
-  use 'nvim-treesitter/nvim-treesitter-context' -- display current function at top
+  -- use 'nvim-treesitter/nvim-treesitter-context' -- display current function/class at top
+  use {
+    "SmiteshP/nvim-navic",
+    requires = "neovim/nvim-lspconfig"
+}
 
   -- barbar : buffer in tabs
   use 'nvim-tree/nvim-web-devicons' -- OPTIONAL: for file icons
   use 'lewis6991/gitsigns.nvim' -- OPTIONAL: for git status
   use 'romgrk/barbar.nvim'
+  
+  use({
+    "RRethy/vim-illuminate" -- highlight current word
+  })
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins

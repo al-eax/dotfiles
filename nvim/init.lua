@@ -5,6 +5,7 @@ vim.g.is_windows = is_windows
 
 -- auto wrap lines
 vim.cmd(":set wrap linebreak nolist")
+vim.cmd(":set ignorecase")
 
 vim.opt.scrolloff = 10
 
@@ -16,7 +17,6 @@ function ReloadConfig()
   vim.notify("Config reloaded!", vim.log.levels.INFO)
 end
 vim.api.nvim_create_user_command('ReloadCfg', ReloadConfig, {})
-
 
 
 -- use system clipboard
@@ -141,6 +141,7 @@ require("nvim-dap-virtual-text").setup({
   only_first_definition = false,
   all_references = false,
 })
+
 -- configure display of breakpoints
 vim.fn.sign_define('DapBreakpoint', { text = '🔴', texthl = '', linehl = '', numhl = '' })
 vim.fn.sign_define('DapStopped', { text = '▶', texthl = '', linehl = '', numhl = '' })
@@ -209,7 +210,7 @@ require('mason-lspconfig').setup({
 
           -- Don't do anything if there is a project local config
           if uv.fs_stat(path .. '/.luarc.json')
-              or uv.fs_stat(path .. '/.luarc.jsonc')
+            or uv.fs_stat(path .. '/.luarc.jsonc')
           then
             return
           end
@@ -288,8 +289,8 @@ cmp.setup({
     { name = 'luasnip',  keyword_length = 2 },
     { name = 'path',     keyword_length = 2 },
   }, {
-    { name = 'buffer', keyword_length = 4 },
-  })
+      { name = 'buffer', keyword_length = 3 },
+    })
 
 })
 
@@ -338,13 +339,24 @@ local ff = function()
   _builtin.find_files({ no_ignore = true }) -- some py files in cs.workspaces were ignored
 end
 vim.keymap.set('n', '<leader>ff', ff, {})
-vim.keymap.set('n', '<leader>fg', builtin.live_grep, {}) -- requred sudo apt-get install ripgrep on windows chkoco install ripgrep
+vim.keymap.set('n', '<leader>fg', ":lua require('telescope.builtin').live_grep({ no_ignore = true })<cr>", {}) -- requred sudo apt-get install ripgrep on windows chkoco install ripgrep
 vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
-vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
+vim.keymap.set('n', '<leader>fw', builtin.grep_string, {})
 
 local actions = require("telescope.actions")
 require('telescope').setup {
   defaults = {
+    file_ignore_patterns = { ".git/", "node_modules/", "*.log" , ".venv/", ".env/"},
+    vimgrep_arguments = {
+      'rg',
+      '--color=never',
+      '--no-heading',
+      '--with-filename',
+      '--line-number',
+      '--column',
+      '--smart-case',
+      '-u'  -- ignore ignore files (.gitignore...)
+    },
     mappings = {
       i = {
         ["<C-j>"] = actions.move_selection_next,     -- move to next result
@@ -357,27 +369,34 @@ require('telescope').setup {
         ["<C-k>"] = actions.move_selection_previous,
       },
     },
-    -- find_command = {
-    --   "rg",
-    --   "--no-heading",
-    --   "--with-filename",
-    --   "--line-number",
-    --   "--column",
-    --   "--smart-case",
-    -- },
+  },
+  pickers = {
+    find_files = {
+      find_command = {
+        "fd",
+        ".",
+        "--type",
+        "file",
+        "--hidden",
+        "--strip-cwd-prefix"
+      }
+    }
   },
 }
 
-
-
 -- ## bookmark
-function get_bokmark_dir()
-  return vim.fn.expand "$HOME/.bookmarks"
+function getBookmarkFile()
+  local bookmarkdir = vim.fn.expand "$HOME/.vimbookmarks/"
+  if vim.fn.isdirectory(bookmarkdir) == 0 then
+    vim.fn.mkdir(bookmarkdir)
+  end
+  bookmarkdir = bookmarkdir .. vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
+  return bookmarkdir
 end
 
 require('bookmarks').setup {
   -- sign_priority = 8,  --set bookmark sign priority to cover other sign
-  save_file = get_bokmark_dir(), -- bookmarks save file path
+  save_file = getBookmarkFile(), -- bookmarks save file path
   keywords = {
     ["@t"] = "☑️ ", -- mark annotation startswith @t ,signs this icon as `Todo`
     ["@w"] = "⚠️ ", -- mark annotation startswith @w ,signs this icon as `Warn`
@@ -393,11 +412,10 @@ require('bookmarks').setup {
     map("n", "mp", bm.bookmark_prev)                               -- jump to previous mark in local buffer
     --map("n","ml",bm.bookmark_list) -- show marked file list in quickfix window
     map("n", "ml", require('telescope').extensions.bookmarks.list) -- show marked file list in quickfix window
-    map("n", "mx", bm.bookmark_clear_all)                          -- removes all bookmarks
+    map("n", "md", bm.bookmark_clear_all)                          -- removes all bookmarks
   end
 }
 require('telescope').load_extension('bookmarks') -- allow keys "ml" to show bookmarked files in telescope
-
 -- end bookmakt
 
 -- ## indent lines
@@ -407,32 +425,6 @@ require("ibl").setup()
 -- comments like TODO: FIX: HACK:
 require("todo-comments").setup()
 -- end comments
-
-
--- command prompt
-require("noice").setup({
-  lsp = {
-    -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
-    override = {
-      ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-      ["vim.lsp.util.stylize_markdown"] = true,
-      ["cmp.entry.get_documentation"] = true, -- requires hrsh7th/nvim-cmp
-    },
-  },
-  -- you can enable a preset for easier configuration
-  presets = {
-    bottom_search = true,         -- use a classic bottom cmdline for search
-    command_palette = true,       -- position the cmdline and popupmenu together
-    long_message_to_split = true, -- long messages will be sent to a split
-    inc_rename = false,           -- enables an input dialog for inc-rename.nvim
-    lsp_doc_border = false,       -- add a border to hover docs and signature help
-  },
-  messages = {
-    enabled = false
-  }
-})
-
--- end comment prompt
 
 -- ## auto session
 vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
@@ -480,11 +472,17 @@ vim.keymap.set("n", "<A-q>", "<Cmd>BufferClose!<CR>")
 -- end babar
 
 
-
 -- top content line: display current function/class
-require 'treesitter-context'.setup {
-  mode = "topline",
-  max_lines = 10,
+-- require 'treesitter-context'.setup {
+--   mode = "topline",
+--   max_lines = 10,
+-- }
+local navic = require("nvim-navic")
+
+require("lspconfig").clangd.setup {
+  on_attach = function(client, bufnr)
+    navic.attach(client, bufnr)
+  end
 }
 
 
@@ -506,8 +504,10 @@ function ToggleNvimTree()
 end
 
 vim.keymap.set('n', '<leader>e', ToggleNvimTree, { desc = "Trigger [E]xplorer" }) -- open file explorer by SPACE+e
--- vim.keymap.set('n', '<leader>E', ":NvimTreeFocus<CR>", { desc = "Fokus [E]xplorer" }) -- open file explorer by SPACE+e
+vim.keymap.set('n', '<leader>E', function() vim.cmd("NvimTreeClose") end, { desc = "Trigger [E]xplorer" }) -- open file explorer by SPACE+e
 
+
+require('illuminate').configure() -- highlight current word under cursor under cursor
 
 
 -- toggle diagnostics list
@@ -550,7 +550,7 @@ vim.keymap.set("v", "<C-A>", "<esc>ggVG")
 vim.keymap.set("v", "<c-f>", "0y/<c-r>0")
 vim.keymap.set("v", "<c-r>", "0y:%s/<c-r>0//g<left><left>")
 
--- clear search highlight text when <ECS>
+-- clear highlight search text when <ECS>
 vim.keymap.set("n", "<esc>", "<esc>:noh<CR>", { noremap = true })
 
 
@@ -569,8 +569,12 @@ vim.keymap.set("n", "@", "@1", { noremap = true })
 vim.keymap.set("n", "<leader>db", ":lua require'dap'.toggle_breakpoint()<cr>", { desc = "[D]ebug: toggle [B]reakpoint" })
 vim.keymap.set("n", "<leader>dc", ":lua require'dap'.continue()<cr>", { desc = "[D]ebug: [C]ontinue/Start" })
 vim.keymap.set("n", "<F5>", ":lua require'dap'.continue()<cr>")
+
+vim.keymap.set("n", "<F6>", ":lua require'dap'.step_over()<cr>")
+vim.keymap.set("n", "<F7>", ":lua require'dap'.step_into()<cr>")
 vim.keymap.set("n", "<F10>", ":lua require'dap'.step_over()<cr>")
 vim.keymap.set("n", "<F11>", ":lua require'dap'.step_into()<cr>")
+
 vim.keymap.set("n", "<leader>de", ":lua require'dapui'.eval()<cr>", { desc = "[D]ebug: [Eval] current cursor position" })
 
 
