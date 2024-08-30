@@ -124,6 +124,7 @@ local dap = require("dap")
 local dapui = require("dapui")
 dapui.setup()
 
+
 dap.listeners.after.event_initialized["dapui_config"] = function()
   dapui.open()
 end
@@ -133,6 +134,17 @@ end
 dap.listeners.before.event_exited["dapui_config"] = function()
   dapui.close()
 end
+vim.api.nvim_create_user_command('Dap', dapui.toggle, {}) -- toggle dapui
+
+table.insert(dap.configurations.python, {
+  type = 'python',
+  request = 'launch',
+  name = 'Django',
+  program = vim.fn.getcwd() .. '/manage.py',  -- NOTE: Adapt path to manage.py as needed
+  args = {'runserver', '--noreload'},
+})
+
+
 
 -- inline object values while debugging
 require("nvim-dap-virtual-text").setup({
@@ -464,13 +476,13 @@ vim.keymap.set("n", "<A-q>", "<Cmd>BufferClose!<CR>")
 --   mode = "topline",
 --   max_lines = 10,
 -- }
-local navic = require("nvim-navic")
-
-require("lspconfig").clangd.setup {
-  on_attach = function(client, bufnr)
-    navic.attach(client, bufnr)
-  end
-}
+-- local navic = require("nvim-navic")
+--
+-- require("lspconfig").clangd.setup {
+--   on_attach = function(client, bufnr)
+--     navic.attach(client, bufnr)
+--   end
+-- }
 
 
 -- ## nvim-tree
@@ -506,8 +518,6 @@ vim.keymap.set("n", "<leader>q", ":q!<CR>")
 vim.keymap.set("n", "<leader>Q", ":q!<CR>")
 vim.keymap.set("n", "<C-S>", ":w<CR>")
 
-vim.keymap.set({ "n", "v" }, "J", "10j")
-vim.keymap.set({ "n", "v" }, "K", "10k")
 
 -- do not store in register
 vim.keymap.set({ "n", "v" }, "d", '"_d')
@@ -565,5 +575,8 @@ vim.keymap.set("n", "<F11>", ":lua require'dap'.step_into()<cr>")
 
 vim.keymap.set("n", "<leader>de", ":lua require'dapui'.eval()<cr>", { desc = "[D]ebug: [Eval] current cursor position" })
 
+
+vim.keymap.set({ "n", "v" }, "J", "10j")
+vim.keymap.set({ "n", "v" }, "K", "10k",{ noremap = false, silent = true })
 
 vim.keymap.set({ "n", "v" }, "<C-P>", ":")
