@@ -119,7 +119,7 @@ else
   require("dap-python").setup(mason_python_path)
 end
 
-
+-- make dap open when debugging starts
 local dap = require("dap")
 local dapui = require("dapui")
 dapui.setup()
@@ -334,19 +334,16 @@ require("trouble").setup()
 
 -- Telescope
 local builtin = require('telescope.builtin')
-local ff = function()
-  local _builtin = require('telescope.builtin')
-  _builtin.find_files({ no_ignore = true }) -- some py files in cs.workspaces were ignored
-end
-vim.keymap.set('n', '<leader>ff', ff, {})
-vim.keymap.set('n', '<leader>fg', ":lua require('telescope.builtin').live_grep({ no_ignore = true })<cr>", {}) -- requred sudo apt-get install ripgrep on windows chkoco install ripgrep
-vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
-vim.keymap.set('n', '<leader>fw', builtin.grep_string, {})
+
+vim.keymap.set('n', '<leader>ff', ":lua require('telescope.builtin').find_files({ no_ignore = true })<cr>", {desc = "[f]ind [f]iles"})
+vim.keymap.set('n', '<leader>fg', ":lua require('telescope.builtin').live_grep({ no_ignore = true })<cr>", {desc = "[f]ind text via live[g]ep"}) -- requred sudo apt-get install ripgrep on windows chkoco install ripgrep
+vim.keymap.set('n', '<leader>fb', builtin.buffers, {desc = "[f]ind [b]uffer"})
+vim.keymap.set('n', '<leader>fw', builtin.grep_string, {desc = "[f]ind [w]ord at cursor position"})
 
 local actions = require("telescope.actions")
 require('telescope').setup {
   defaults = {
-    file_ignore_patterns = { ".git/", "node_modules/", "*.log" , ".venv/", ".env/"},
+    --file_ignore_patterns = { ".git/", "node_modules/", "*.log" , ".venv/", ".env/"},
     vimgrep_arguments = {
       'rg',
       '--color=never',
@@ -355,7 +352,7 @@ require('telescope').setup {
       '--line-number',
       '--column',
       '--smart-case',
-      '-u'  -- ignore ignore files (.gitignore...)
+      '-u'  -- do not consitder ignore files (.gitignore...)
     },
     mappings = {
       i = {
@@ -370,28 +367,18 @@ require('telescope').setup {
       },
     },
   },
-  pickers = {
-    find_files = {
-      find_command = {
-        "fd",
-        ".",
-        "--type",
-        "file",
-        "--hidden",
-        "--strip-cwd-prefix"
-      }
-    }
-  },
 }
 
 -- ## bookmark
 function getBookmarkFile()
+  -- get bookmrk file for current session (based on cwd path)
   local bookmarkdir = vim.fn.expand "$HOME/.vimbookmarks/"
   if vim.fn.isdirectory(bookmarkdir) == 0 then
     vim.fn.mkdir(bookmarkdir)
   end
-  bookmarkdir = bookmarkdir .. vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
-  return bookmarkdir
+  local cwd = vim.fn.getcwd()
+  local cleaned_cwd = cwd:gsub("[/\\:]", "")
+  return bookmarkdir .. cleaned_cwd
 end
 
 require('bookmarks').setup {
@@ -486,7 +473,7 @@ require("lspconfig").clangd.setup {
 }
 
 
--- nvim-tree
+-- ## nvim-tree
 function ToggleNvimTree()
   local view = require("nvim-tree.view")
 
@@ -506,6 +493,7 @@ end
 vim.keymap.set('n', '<leader>e', ToggleNvimTree, { desc = "Trigger [E]xplorer" }) -- open file explorer by SPACE+e
 vim.keymap.set('n', '<leader>E', function() vim.cmd("NvimTreeClose") end, { desc = "Trigger [E]xplorer" }) -- open file explorer by SPACE+e
 
+-- end nvim-tree
 
 require('illuminate').configure() -- highlight current word under cursor under cursor
 
@@ -577,15 +565,5 @@ vim.keymap.set("n", "<F11>", ":lua require'dap'.step_into()<cr>")
 
 vim.keymap.set("n", "<leader>de", ":lua require'dapui'.eval()<cr>", { desc = "[D]ebug: [Eval] current cursor position" })
 
-
--- toggle maximize current window
--- vim.keymap.set("n", "<C-z>", ":lua require('maximize').toggle()<CR>")
--- vim.keymap.set("n", "<leader>z", ":lua require('maximize').toggle()<CR>")
-
-
--- new tab
--- vim.keymap.set("n", "<C-T>", ":tabnew<CR>")
--- vim.keymap.set("n", "<C-H>", ":tabprev<CR>")
--- vim.keymap.set("n", "<C-L>", ":tabnext<CR>")
 
 vim.keymap.set({ "n", "v" }, "<C-P>", ":")
