@@ -33,7 +33,7 @@ return {
                 max_lines = 3,-- How many lines the window should span. Values <= 0 mean no limit.
                 min_window_height = 2, -- Minimum editor window height to enable context. Values <= 0 mean no limit.
                 line_numbers = true,
-                multiline_threshold = 1, -- Maximum number of lines to show for a single context
+                multiline_threshold = 1, -- Maximum number of lines to show for a single context (only show first line of multi line if-statements/function args)
                 trim_scope = 'inner', -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
                 mode = 'topline',  -- Line used to calculate context. Choices: 'cursor', 'topline'
                 -- Separator between context and content. Should be a single character string, like '-'.

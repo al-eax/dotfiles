@@ -3,8 +3,12 @@ return {
   {
     "folke/trouble.nvim", -- show diagnostics
     config = function()
-     require("trouble").setup()
+     require("trouble").setup({
+     })
       vim.keymap.set("n", "<leader>td", "<cmd>Trouble diagnostics toggle<cr>", { desc = "[T]oggle [D]iagnostics" })
+      local actions = require("telescope.actions")
+      local trouble = require("trouble.providers.telescope")
+      local telescope = require("telescope")
     end
   },
   {
@@ -20,7 +24,7 @@ return {
     end
   },
   {
-    'rachartier/tiny-inline-diagnostic.nvim',
+    'rachartier/tiny-inline-diagnostic.nvim', -- wrap diagnostics of the current line
     event = 'VeryLazy',
     config = function()
       vim.opt.updatetime = 100

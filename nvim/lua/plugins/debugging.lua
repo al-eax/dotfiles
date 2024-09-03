@@ -1,5 +1,5 @@
 
-
+--- Check if file exists
 function FileExists(filepath)
   local stat = vim.loop.fs_stat(filepath)
   return stat ~= nil
@@ -43,7 +43,7 @@ function ConfigureDjangoProject()
 end
 
 return{
-    { 'nvim-neotest/nvim-nio'},
+    { "nvim-neotest/nvim-nio"},
     {
         'mfussenegger/nvim-dap-python',
         config = function()
