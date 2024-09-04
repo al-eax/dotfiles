@@ -1,4 +1,10 @@
-
+vim.cmd(
+        [[
+let g:minimap_width = 10
+let g:minimap_auto_start = 1
+let g:minimap_auto_start_win_enter = 1
+      ]]
+)
 return {
   {
     "folke/trouble.nvim", -- show diagnostics
@@ -39,6 +45,14 @@ return {
         },
       }
     end,
-  }
+  },
+  { 
+    "lewis6991/satellite.nvim", -- code minimap plugin
+    init = function()
+       require('satellite').setup({
+        width = 10
+       })
+    end,
+} 
 
 }

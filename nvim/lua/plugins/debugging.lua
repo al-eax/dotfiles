@@ -87,8 +87,11 @@ return{
         config = function()
             local dapui = require("dapui")
             dapui.setup()
-
+            
             local dap = require("dap")
+            
+          
+            
             dap.listeners.after.event_initialized["dapui_config"] = function()
                 dapui.open()
             end
@@ -99,7 +102,7 @@ return{
                 dapui.close()
             end
 
-            vim.api.nvim_create_user_command('Dap', dapui.toggle, {}) -- toggle dapui
+            vim.api.nvim_create_user_command('Dap', dap.toggle, {}) -- toggle dapui
             vim.keymap.set("n", "<leader>de", ":lua require'dapui'.eval()<cr>", { desc = "[D]ebug: [Eval] current cursor position" })
         end
     },
