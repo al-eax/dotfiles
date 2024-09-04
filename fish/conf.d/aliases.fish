@@ -21,3 +21,4 @@ alias ts='tmux new -s'
 alias tls='tmux ls'
 
 alias nvim='~/Apps/nvim.appimage'
+alias v='~/Apps/nvim.appimage'
