@@ -25,8 +25,8 @@ vim.g.neominimap = {
 
 
 -- keybinidngs
-vim.keymap.set("n", "<leader>q", ":q!<CR>")
-vim.keymap.set("n", "<leader>Q", ":q!<CR>")
+-- vim.keymap.set("n", "<leader>q", ":q!<CR>")
+-- vim.keymap.set("n", "<leader>Q", ":q!<CR>")
 vim.keymap.set("n", "<C-S>", ":w<CR>")
 
 

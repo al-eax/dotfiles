@@ -71,8 +71,8 @@ return{
             vim.fn.sign_define('DapBreakpoint', { text = '🔴', texthl = '', linehl = '', numhl = '' })
             vim.fn.sign_define('DapStopped', { text = '▶', texthl = '', linehl = '', numhl = '' })
 
-            vim.keymap.set("n", "<leader>db", ":lua require'dap'.toggle_breakpoint()<cr>", { desc = "[D]ebug: toggle [B]reakpoint" })
-            vim.keymap.set("n", "<leader>dc", ":lua require'dap'.continue()<cr>", { desc = "[D]ebug: [C]ontinue/Start" })
+            vim.keymap.set("n", "<leader>b", ":lua require'dap'.toggle_breakpoint()<cr>", { desc = "[D]ebug: toggle [B]reakpoint" })
+            --vim.keymap.set("n", "<leader>dc", ":lua require'dap'.continue()<cr>", { desc = "[D]ebug: [C]ontinue/Start" })
             vim.keymap.set("n", "<F5>", ":lua require'dap'.continue()<cr>")
 
             vim.keymap.set("n", "<F6>", ":lua require'dap'.step_over()<cr>")

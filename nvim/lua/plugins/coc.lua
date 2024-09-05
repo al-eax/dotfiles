@@ -1,14 +1,23 @@
 
 -- auto install these coc modules
-vim.cmd(
-  [[
-    let g:coc_global_extensions = ['coc-pyright', 'coc-git', 'coc-lua', 'coc-marketplace']
-  ]]
-)
+-- vim.cmd(
+--   [[
+--     let g:coc_global_extensions = [ 'coc-lua', 'coc-marketplace']
+--   ]]
+-- )
+
+
+
 return {
   {
     'neoclide/coc.nvim',
     config = function()
+      
+      vim.g.coc_user_config = { -- disable inline type hints
+        inlayHint = {enable = false}
+      }
+
+
       vim.keymap.set("n", "<leader>a", ":lua vim.fn.CocAction('codeAction')<cr>",{desc = "Code [a]action"})
       vim.api.nvim_set_keymap('n', '<leader>d', ':CocList diagnostics<CR>', { noremap = true, silent = true , desc="[D]iagnostics"})
       -- Some servers have issues with backup files, see #649
@@ -39,13 +48,15 @@ return {
       local opts = {silent = true, noremap = true, expr = true, replace_keycodes = false}
       keyset("i", "<TAB>", 'coc#pum#visible() ? coc#pum#next(1) : v:lua.check_back_space() ? "<TAB>" : coc#refresh()', opts)
       keyset("i", "<S-TAB>", [[coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"]], opts)
+      keyset("i", "<c-j>", 'coc#pum#visible() ? coc#pum#next(1) : v:lua.check_back_space() ? "<TAB>" : coc#refresh()', opts)
+      keyset("i", "<c-k>", [[coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"]], opts)
 
       -- Make <CR> to accept selected completion item or notify coc.nvim to format
       -- <C-g>u breaks current undo, please make your own choice
       keyset("i", "<cr>", [[coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"]], opts)
 
       -- Use <c-j> to trigger snippets
-      keyset("i", "<c-j>", "<Plug>(coc-snippets-expand-jump)")
+      -- keyset("i", "<c-j>", "<Plug>(coc-snippets-expand-jump)")
       -- Use <c-space> to trigger completion
       keyset("i", "<c-space>", "coc#refresh()", {silent = true, expr = true})
 
@@ -70,7 +81,7 @@ return {
             vim.api.nvim_command('!' .. vim.o.keywordprg .. ' ' .. cw)
         end
     end
-    -- keyset("n", "K", '<CMD>lua _G.show_docs()<CR>', {silent = true})
+    keyset("n", "<leader>h", '<CMD>lua _G.show_docs()<CR>', {silent = true})
 
     keyset("n", "<leader>rn", "<Plug>(coc-rename)", {silent = true})
     keyset("n", "<F2>", "<Plug>(coc-rename)", {silent = true})
