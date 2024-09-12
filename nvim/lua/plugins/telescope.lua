@@ -13,6 +13,10 @@ return {
         vim.keymap.set('n', '<leader>fb', builtin.buffers, {desc = "[f]ind [b]uffer"})
         vim.keymap.set('n', '<leader>fw', builtin.grep_string, {desc = "[f]ind [w]ord at cursor position"})
         vim.keymap.set('n', '<leader>fr', builtin.resume, {}) -- show last telescope results
+
+        vim.keymap.set({ "n", "v" }, "<C-P>", ":lua require('telescope.builtin').find_files({ no_ignore = true })<cr>") -- vscode like search
+        --vim.keymap.set({ "n", "v" }, "<C-S-f>",FuzzySearch) -- vscode like search
+
         vim.keymap.set("n",'<leader>fG', FuzzySearch)
         local actions = require("telescope.actions")
         require('telescope').setup({

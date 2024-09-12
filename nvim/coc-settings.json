@@ -1,0 +1,21 @@
+{
+  "inlayHint.display": false, // disable virtual inline type hints 
+  "python.linting.enabled": true,
+  "python.linting.pylintEnabled": true,
+  "python.linting.pylintPath": "pylint",
+  "python.linting.pylintArgs": [
+      //  "--disable=C0111"  // Beispiel für ein deaktiviertes Pylint-Feature, kannst du anpassen.
+    "--disable=R1702", // too-many-nested-blocks / R1702
+    "--disable=R0914",// too-many-locals / R0914
+    "--disable=W0718", // broad-exception-caught / W0718 
+    "--disable=C0209", // consider-using-f-string / C0209
+    "--disable=C0302", // too-many-lines / C0302
+    "--disable=R0915", // pylint too-many-statements/C0302
+    "--disable=R0912", // pylint too-many-branches R0912
+    "--disable=R0913", // pylint too-many-arguments R0913
+    "--disable=R0902", // too-many-instance-attributes
+    "--disable=R0911", // too-many-return-statements
+    ],
+  "python.linting.flake8Enabled": true,
+  "python.linting.flake8Path": "flake8",
+}

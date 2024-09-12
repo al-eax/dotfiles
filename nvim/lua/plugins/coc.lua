@@ -1,11 +1,4 @@
 
--- auto install these coc modules
--- vim.cmd(
---   [[
---     let g:coc_global_extensions = [ 'coc-lua', 'coc-marketplace']
---   ]]
--- )
-
 
 
 return {
@@ -13,9 +6,12 @@ return {
     'neoclide/coc.nvim',
     config = function()
       
-      vim.g.coc_user_config = { -- disable inline type hints
-        inlayHint = {enable = false}
-      }
+      -- auto install these coc modules
+      vim.cmd(
+        [[
+          let g:coc_global_extensions = [ 'coc-lua', 'coc-marketplace', "coc-pyright", "coc-json"]
+        ]]
+      )
 
 
       vim.keymap.set("n", "<leader>a", ":lua vim.fn.CocAction('codeAction')<cr>",{desc = "Code [a]action"})

@@ -1,5 +1,4 @@
 require("settings") -- load settings.lua
-
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   vim.fn.system({
@@ -13,7 +12,11 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-require("lazy").setup("plugins")
+require("lazy").setup("plugins",{
+  change_detection = {
+			notify = false, -- disable notification when nvim cfg was edited
+		},
+})
 
 
 vim.opt.wrap = false
@@ -48,7 +51,7 @@ vim.keymap.set("n", "<leader>f", ":%s/", { desc = "[F]ind in selection" })
 
 -- searc & replace
 vim.keymap.set("n", "<c-r>", ":%s/", { desc = "[R]eplace in whole buffer" })
-vim.keymap.set("n", "<c-f>", "//g<left><left>", { desc = "[F]ind in whole buffer" })
+vim.keymap.set("n", "<c-f>", "//g<left><left>", { desc = "[F]ind in current buffer" })
 
 -- CTRL+A
 vim.keymap.set("n", "<C-A>", "ggVG")
@@ -76,4 +79,3 @@ vim.keymap.set("n", "@", "@1", { noremap = true })
 vim.keymap.set({ "n", "v" }, "J", "10j")
 vim.keymap.set({ "n", "v" }, "K", "10k",{ noremap = false, silent = true })
 
-vim.keymap.set({ "n", "v" }, "<C-P>", ":")
