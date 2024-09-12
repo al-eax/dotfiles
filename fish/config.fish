@@ -1,6 +1,6 @@
 if status is-interactive 
 and not set -q TMUX
-    exec tmux
+    tmux attach -t home || tmux new -s home
 end
 clear
 
