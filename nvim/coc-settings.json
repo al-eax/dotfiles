@@ -4,6 +4,7 @@
   "python.linting.pylintEnabled": true,
   "python.linting.pylintPath": "pylint",
   "python.linting.pylintArgs": [
+    "--load-plugins=pylint_django",
       //  "--disable=C0111"  // Beispiel für ein deaktiviertes Pylint-Feature, kannst du anpassen.
     "--disable=R1702", // too-many-nested-blocks / R1702
     "--disable=R0914",// too-many-locals / R0914
@@ -14,7 +15,7 @@
     "--disable=R0912", // pylint too-many-branches R0912
     "--disable=R0913", // pylint too-many-arguments R0913
     "--disable=R0902", // too-many-instance-attributes
-    "--disable=R0911", // too-many-return-statements
+    "--disable=R0911", // too-many-return-statements,
     ],
   "python.linting.flake8Enabled": true,
   "python.linting.flake8Path": "flake8",

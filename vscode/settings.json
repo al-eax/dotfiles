@@ -1,5 +1,4 @@
 {
-  "python.defaultInterpreterPath": "C:\\Users\\ahh\\source\\repos\\cs.workspaces.15.5.2\\cs.workspaces\\workspaces_client\\wsclient\\.venv",
   "editor.lineNumbers": "on",
   "security.workspace.trust.untrustedFiles": "open",
   "vim.useSystemClipboard": true,
@@ -11,7 +10,6 @@
   "[python]": {
     "editor.defaultFormatter": "ms-python.black-formatter"
   },
-  "vim.vimrc.path": "C:\\Users\\ahh\\.vimrc",
   "vim.smartRelativeLine": true,
   "vim.vimrc.enable": true,
   "vim.maxmapdepth": 500,
@@ -19,12 +17,12 @@
   "vim.showMarksInGutter": true,
   "vim.leader": " ",
   "vim.handleKeys": {
-    "<C-p>": false // https://github.com/VSCodeVim/Vim/issues/4017#issuecomment-1714557940
+    "<C-p>": false // allow ctrl+p VS-Code file search: https://github.com/VSCodeVim/Vim/issues/4017#issuecomment-1714557940
   },
   "vim.normalModeKeyBindings": [
     // begin Bookmarks 
     {
-      "before": [
+      "before": [ // create bookmark
         "m",
         "m"
       ],
@@ -33,7 +31,7 @@
       ]
     },
     {
-      "before": [
+      "before": [ // create annotated bookmark
         "m",
         "i"
       ],
@@ -42,7 +40,7 @@
       ]
     },
     {
-      "before": [
+      "before": [ // list all bookmarks
         "m",
         "l"
       ],
@@ -51,7 +49,7 @@
       ]
     },
     {
-      "before": [
+      "before": [ // delete all bookmarks
         "m",
         "d"
       ],
@@ -61,7 +59,7 @@
     },
     // end Bookmarks
     {
-      "before": [
+      "before": [ // goto reference / list references
         "g",
         "r"
       ],
@@ -70,7 +68,7 @@
       ]
     },
     {
-      "before": [
+      "before": [ // toggle breakpoint
         "<leader>",
         "b"
       ],
@@ -79,7 +77,7 @@
       ]
     },
     {
-      "before" : [
+      "before" : [ // Code action
         "<leader>",
         "a"
       ],
@@ -91,13 +89,6 @@
   "vim.hlsearch": true,
   "vim.gdefault": true,
   "window.zoomLevel": -1,
-  "workbench.colorCustomizations": {
-    "statusBar.background": "#005f5f",
-    "statusBar.noFolderBackground": "#005f5f",
-    "statusBar.debuggingBackground": "#005f5f",
-    "statusBar.foreground": "#ffffff",
-    "statusBar.debuggingForeground": "#ffffff"
-  },
   "bookmarks.keepBookmarksOnLineDelete": true,
   "bookmarks.saveBookmarksInProject": true,
   "pylint.args": [
@@ -111,11 +102,15 @@
     "--disable=R0913", // pylint too-many-arguments R0913
     "--disable=R0902", // too-many-instance-attributes
     "--disable=R0911", // too-many-return-statements
+    "--disable=C0114", // missing-module-docstring / C0114
+    "--disable=C0115", // missing class doc string
   ],
   "debug.inlineValues": "off",
   "editor.minimap.showSlider": "always",
   "debugpy.showPythonInlineValues": true,
   "extensions.experimental.affinity": {
     "asvetliakov.vscode-neovim": 1
-  }
+  },
+  "workbench.colorTheme": "Default Light Modern",
+  "git.confirmSync": false
 }

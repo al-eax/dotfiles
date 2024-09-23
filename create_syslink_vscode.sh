@@ -1,1 +1,1 @@
-ln -s ~/repos/dotfiles/vscode/setting.json ~/.config/Code/User/settings.json
+ln -s ~/repos/dotfiles/vscode/settings.json ~/.config/Code/User/settings.json
