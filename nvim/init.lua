@@ -36,7 +36,7 @@ vim.keymap.set("n", "<C-S>", ":w<CR>")
 -- do not store in register
 vim.keymap.set({ "n", "v" }, "d", '"_d')
 vim.keymap.set("n", "dd", '"_dd')
-vim.keymap.set("n", "vv", "V")
+vim.keymap.set("n", "vv", "v$<left>")
 
 -- redo
 vim.keymap.set("n", "U", "<C-R>")
