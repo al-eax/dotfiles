@@ -11,7 +11,7 @@ end
 
 return {
     {
-        "folke/todo-comments.nvim",
+        "folke/todo-comments.nvim", -- highlight INFO: TODO,FIXME and so on
         config = function()
             require("todo-comments").setup()
         end

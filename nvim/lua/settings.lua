@@ -5,6 +5,9 @@ vim.g.is_windows = is_windows
 vim.cmd(":set wrap linebreak nolist")
 vim.cmd(":set ignorecase") -- ignore case sensitivity for search
 
+vim.opt.wrap = false
+vim.opt.sidescrolloff = 36 -- Set a large value
+
 vim.opt.scrolloff = 10
 
 -- use system clipboard

@@ -26,7 +26,7 @@ return {
     end
     },
     {
-        "nvim-treesitter/nvim-treesitter-context", -- show current class/function 
+        "nvim-treesitter/nvim-treesitter-context", -- show current class/function context
         config = function()
             require('treesitter-context').setup{
                 enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)

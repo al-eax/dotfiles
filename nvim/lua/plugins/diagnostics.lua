@@ -1,16 +1,15 @@
 vim.cmd(
-        [[
-let g:minimap_width = 10
-let g:minimap_auto_start = 1
-let g:minimap_auto_start_win_enter = 1
-      ]]
+[[
+  let g:minimap_width = 10
+  let g:minimap_auto_start = 1
+  let g:minimap_auto_start_win_enter = 1
+]]
 )
 return {
   {
-    "folke/trouble.nvim", -- show diagnostics
+    "folke/trouble.nvim", -- show diagnostics (only works with LSP and not with COC)
     config = function()
-     require("trouble").setup({
-     })
+     require("trouble").setup({})
       vim.keymap.set("n", "<leader>td", "<cmd>Trouble diagnostics toggle<cr>", { desc = "[T]oggle [D]iagnostics" })
       local actions = require("telescope.actions")
       local trouble = require("trouble.providers.telescope")
@@ -30,7 +29,7 @@ return {
     end
   },
   {
-    'rachartier/tiny-inline-diagnostic.nvim', -- wrap diagnostics of the current line
+    'rachartier/tiny-inline-diagnostic.nvim', -- wrap diagnostics of the current line (only works with LSP, not with COC)
     event = 'VeryLazy',
     config = function()
       vim.opt.updatetime = 100
@@ -47,12 +46,11 @@ return {
     end,
   },
   { 
-    "lewis6991/satellite.nvim", -- code minimap plugin
+  "lewis6991/satellite.nvim", -- scollbar
     init = function()
-       require('satellite').setup({
+     require('satellite').setup({
         width = 10
        })
-    end,
-} 
-
+    end
+  } 
 }

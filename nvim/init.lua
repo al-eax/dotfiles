@@ -27,9 +27,7 @@ vim.g.neominimap = {
 }
 
 
--- keybinidngs
--- vim.keymap.set("n", "<leader>q", ":q!<CR>")
--- vim.keymap.set("n", "<leader>Q", ":q!<CR>")
+-- basic keybinidngs
 vim.keymap.set("n", "<C-S>", ":w<CR>")
 
 
@@ -73,8 +71,6 @@ vim.keymap.set("n", "<leader>w", "<C-W>")
 -- macro recording
 vim.keymap.set("n", "Q", "q1")
 vim.keymap.set("n", "@", "@1", { noremap = true })
-
-
 
 vim.keymap.set({ "n", "v" }, "J", "10j")
 vim.keymap.set({ "n", "v" }, "K", "10k",{ noremap = false, silent = true })
