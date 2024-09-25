@@ -6,7 +6,9 @@ function GetBookmarkFile()
   end
   local cwd = vim.fn.getcwd()
   local cleaned_cwd = cwd:gsub("[/\\:]", "")
-  return bookmarkdir .. cleaned_cwd
+  local path = bookmarkdir .. cleaned_cwd .. ".json"
+  -- print("load bookmarks from ", path)
+  return path
 end
 
 return {

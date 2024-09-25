@@ -19,16 +19,9 @@ require("lazy").setup("plugins",{
 })
 
 
-vim.opt.wrap = false
-vim.opt.sidescrolloff = 36 -- Set a large value
-
-vim.g.neominimap = {
-  auto_enable = true,
-}
-
-
 -- basic keybinidngs
 vim.keymap.set("n", "<C-S>", ":w<CR>")
+vim.keymap.set("n", "'", "*")
 
 
 -- do not store in register
@@ -66,6 +59,10 @@ vim.keymap.set("n", "<esc>", "<esc>:noh<CR>", { noremap = true })
 
 -- window functions
 vim.keymap.set("n", "<leader>w", "<C-W>")
+vim.keymap.set("n", "<leader>wv", "<C-W>v") -- split window vertival
+vim.keymap.set("n", "<leader>wH", "<C-W>s") -- split window vertival
+vim.keymap.set("n", "<leader>ws", "<C-W>s") -- split window vertival
+vim.keymap.set("n", "<leader>wq", "<C-W>q") -- close current window
 
 
 -- macro recording

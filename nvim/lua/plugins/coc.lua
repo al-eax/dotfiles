@@ -15,7 +15,7 @@ return {
 
 
       vim.keymap.set("n", "<leader>a", ":lua vim.fn.CocAction('codeAction')<cr>",{desc = "Code [a]action"})
-      vim.api.nvim_set_keymap('n', '<leader>d', ':CocList diagnostics<CR>', { noremap = true, silent = true , desc="[D]iagnostics"})
+      vim.api.nvim_set_keymap('n', '<leader>td', ':CocDiagnostics<CR>', { noremap = true, silent = true , desc="[T]oggle [D]iagnostics"})
       -- Some servers have issues with backup files, see #649
       vim.opt.backup = false
       vim.opt.writebackup = false
