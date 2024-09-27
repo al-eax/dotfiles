@@ -1,5 +1,6 @@
 return {
   "lewis6991/gitsigns.nvim",
+  -- enabled = false,
   config = function ()
     require('gitsigns').setup({
        signs = {
@@ -40,6 +41,16 @@ return {
     vim.api.nvim_create_user_command('Gp', function() -- undo/reset current honk (line)
       vim.cmd(":Gitsigns prev_hunk")
     end, {}) 
+
+    git = require('gitsigns')
+    vim.keymap.set("n","<space>gj", ":Gitsigns next_hunk<CR>")
+    vim.keymap.set("n","<space>gk", ":Gitsigns prev_hunk<CR>")
+    vim.keymap.set("n","<space>gn", ":Gitsigns next_hunk<CR>")
+    vim.keymap.set("n","<space>gp", ":Gitsigns prev_hunk<CR>")
+
+    vim.keymap.set("n","<space>gd", ":Gdiff<CR>")
+    vim.keymap.set("n","<space>gD", ":Gdifff<CR>")
+    vim.keymap.set("n","<space>gr", ":Greset<CR>")
 
   end
 }

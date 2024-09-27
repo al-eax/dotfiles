@@ -1,8 +1,8 @@
 return {
     {
     'nvim-treesitter/nvim-treesitter',
+    -- enabled=false,
     event = { "BufReadPre", "BufNewFile" },
-   
     config = function()
         local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
         ts_update()
@@ -18,15 +18,22 @@ return {
             indent = { enable = true },
             highlight = {
                 enable = true,
-                -- Using this option may slow down your editor, and you may see some duplicate highlights.
-                -- Instead of true it can also be a list of languages
                 additional_vim_regex_highlighting = false,
-            }
+                use_languagetree = false,
+                disable = function(_, bufnr)
+                    local buf_name = vim.api.nvim_buf_get_name(bufnr)
+                    local file_size = vim.api.nvim_call_function("getfsize", { buf_name })
+                    print("fuck")
+                    return file_size > 256 * 1024
+                end,            
+          }
+
         })
     end
     },
     {
         "nvim-treesitter/nvim-treesitter-context", -- show current class/function context
+        enabled = false,
         config = function()
             require('treesitter-context').setup{
                 enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)

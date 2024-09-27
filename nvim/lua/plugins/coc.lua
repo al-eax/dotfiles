@@ -4,8 +4,8 @@
 return {
   {
     'neoclide/coc.nvim',
+    -- enabled = false,
     config = function()
-      
       -- auto install these coc modules
       vim.cmd(
         [[

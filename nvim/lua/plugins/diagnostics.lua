@@ -7,6 +7,7 @@ vim.cmd(
 )
 return {
   {
+    enabled = False, -- doesnt work with coc, only works with lsp
     "folke/trouble.nvim", -- show diagnostics (only works with LSP and not with COC)
     config = function()
      require("trouble").setup({})
@@ -31,6 +32,7 @@ return {
   {
     'rachartier/tiny-inline-diagnostic.nvim', -- wrap diagnostics of the current line (only works with LSP, not with COC)
     event = 'VeryLazy',
+    enabled = false,
     config = function()
       vim.opt.updatetime = 100
       vim.diagnostic.config { virtual_text = false }
