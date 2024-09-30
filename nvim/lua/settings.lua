@@ -44,3 +44,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 -- add spell cecking
 -- vim.opt.spelllang = 'en_us'
 -- vim.opt.spell = true
+
+-- show absolute line number in current line instead of relative line number
+vim.opt.statuscolumn = '%=%{v:relnum?v:relnum:v:lnum} '

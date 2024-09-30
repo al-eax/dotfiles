@@ -1,7 +1,9 @@
+vim.cmd("syntax on")
+-- atm_ diable treesitter, because it is slow for large files
 return {
     {
     'nvim-treesitter/nvim-treesitter',
-    -- enabled=false,
+    enabled=false,
     event = { "BufReadPre", "BufNewFile" },
     config = function()
         local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
@@ -20,12 +22,19 @@ return {
                 enable = true,
                 additional_vim_regex_highlighting = false,
                 use_languagetree = false,
-                disable = function(_, bufnr)
-                    local buf_name = vim.api.nvim_buf_get_name(bufnr)
-                    local file_size = vim.api.nvim_call_function("getfsize", { buf_name })
-                    print("fuck")
-                    return file_size > 256 * 1024
-                end,            
+                disable = function(lang, buf)
+                    local max_filesize = 10 * 1024 -- 100 KB
+                    local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+                    if ok and stats and stats.size > max_filesize then
+                        vim.print("disable TREESITTER")
+                        vim.cmd(":TSContextDisable")
+                        return false
+                    else
+                        vim.cmd(":TSContextEnable")
+                        vim.print("enable treesitter")
+                        return true
+                    end
+            end,      
           }
 
         })
