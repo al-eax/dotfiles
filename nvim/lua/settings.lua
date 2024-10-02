@@ -46,4 +46,5 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 -- vim.opt.spell = true
 
 -- show absolute line number in current line instead of relative line number
-vim.opt.statuscolumn = '%=%{v:relnum?v:relnum:v:lnum} '
+vim.cmd(":set nu")
+vim.cmd(":set relativenumber")
