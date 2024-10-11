@@ -26,6 +26,9 @@ return {
             },
             diagnostics = { -- enable LSP diagnostics
                 enable = true
+            },
+            view = {
+              side = "right"
             }
         })
 
