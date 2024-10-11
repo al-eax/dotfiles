@@ -41,7 +41,7 @@ vim.keymap.set("v", "<leader>f", "<esc>/\\%V")
 -- search in current buffer
 vim.keymap.set("n", "<leader>f", ":%s/", { desc = "[F]ind in selection" })
 
--- searc & replace
+-- search & replace
 vim.keymap.set("n", "<c-r>", ":%s/", { desc = "[R]eplace in whole buffer" })
 vim.keymap.set("n", "<c-f>", "//g<left><left>", { desc = "[F]ind in current buffer" })
 
@@ -61,10 +61,15 @@ vim.keymap.set("n", "<esc>", "<esc>:noh<CR>", { noremap = true })
 -- window functions
 vim.keymap.set("n", "<leader>w", "<C-W>")
 vim.keymap.set("n", "<leader>wv", "<C-W>v") -- split window vertival
-vim.keymap.set("n", "<leader>wH", "<C-W>s") -- split window vertival
+vim.keymap.set("n", "<leader>wh", "<C-W>s") -- split window vertival
 vim.keymap.set("n", "<leader>ws", "<C-W>s") -- split window vertival
 vim.keymap.set("n", "<leader>wq", "<C-W>q") -- close current window
 
+-- resize window
+vim.keymap.set("n", "<leader>w+", [[<cmd>vertical resize +5<cr>]]) -- make the window biger vertically
+vim.keymap.set("n", "<leader>w-", [[<cmd>vertical resize -5<cr>]]) -- make the window smaller vertically
+vim.keymap.set("n", "<leader>w*", [[<cmd>horizontal resize +2<cr>]]) -- make the window bigger horizontally
+vim.keymap.set("n", "<leader>w_", [[<cmd>horizontal resize -2<cr>]]) -- make the window smaller horizontally
 
 -- macro recording
 vim.keymap.set("n", "Q", "q1")
