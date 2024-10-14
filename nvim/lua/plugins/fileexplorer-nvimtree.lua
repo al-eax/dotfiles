@@ -26,7 +26,11 @@ return {
             },
             diagnostics = { -- enable LSP diagnostics
                 enable = true
+            },
+            view = {
+              side = "right"
             }
+
         })
 
         vim.keymap.set('n', '<leader>e', ToggleFocusNvimTree, { desc = "Trigger [E]xplorer" }) -- open file explorer by SPACE+e

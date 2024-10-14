@@ -19,4 +19,5 @@
     ],
   "python.linting.flake8Enabled": true,
   "python.linting.flake8Path": "flake8",
+  "diagnostic.messageTarget": "float"
 }

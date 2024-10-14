@@ -47,6 +47,7 @@ return{
     {
         'mfussenegger/nvim-dap-python',
         config = function()
+            -- pyright & debugpy was downloaded by mason, we have to select masoons venv
             if vim.g.is_windows then
                 local mason_python_path = [[C:\Users\ahh\AppData\Local\nvim-data\mason\packages\debugpy\venv\Scripts\python.exe]]
                 require("dap-python").setup(mason_python_path)
@@ -104,6 +105,7 @@ return{
 
             vim.api.nvim_create_user_command('Dap', dapui.toggle, {}) -- toggle dapui
             vim.keymap.set("n", "<leader>de", ":lua require'dapui'.eval()<cr>", { desc = "[D]ebug: [Eval] current cursor position" })
+            vim.keymap.set("n", "<leader>du",dapui.toggle)
         end
     },
     { 
