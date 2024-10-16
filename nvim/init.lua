@@ -66,11 +66,21 @@ vim.keymap.set("n", "<leader>wV", "<C-W>s") -- split window vertival
 vim.keymap.set("n", "<leader>ws", "<C-W>s") -- split window vertival
 vim.keymap.set("n", "<leader>wq", "<C-W>q") -- close current window
 
+
 -- resize window
 vim.keymap.set("n", "<leader>w+", [[<cmd>vertical resize +5<cr>]]) -- make the window biger vertically
 vim.keymap.set("n", "<leader>w-", [[<cmd>vertical resize -5<cr>]]) -- make the window smaller vertically
 vim.keymap.set("n", "<leader>w*", [[<cmd>horizontal resize +2<cr>]]) -- make the window bigger horizontally
 vim.keymap.set("n", "<leader>w_", [[<cmd>horizontal resize -2<cr>]]) -- make the window smaller horizontally
+
+-- tabs
+vim.keymap.set("n", "<leader>th", ":tabprev<cr>", {})
+vim.keymap.set("n", "<leader>tl", ":tabnext<cr>", {})
+vim.keymap.set("n", "<leader>tl", ":tabnext<cr>", {})
+vim.keymap.set("n", "<leader>tt", ":tabnew<cr>", {})
+vim.keymap.set("n", "<leader>tq", ":tabclose<cr>", {})
+
+
 
 -- macro recording
 vim.keymap.set("n", "Q", "q1")
