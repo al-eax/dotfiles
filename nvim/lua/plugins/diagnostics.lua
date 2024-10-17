@@ -7,7 +7,7 @@ vim.cmd(
 )
 return {
   {
-    enabled = False, -- doesnt work with coc, only works with lsp
+    enabled = false, -- doesnt work with coc, only works with lsp
     "folke/trouble.nvim", -- show diagnostics (only works with LSP and not with COC)
     config = function()
      require("trouble").setup({})

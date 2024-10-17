@@ -9,7 +9,7 @@ return {
       -- auto install these coc modules
       vim.cmd(
         [[
-          let g:coc_global_extensions = [ 'coc-lua', 'coc-marketplace', "coc-pyright", "coc-json"]
+          let g:coc_global_extensions = [ 'coc-lua', 'coc-marketplace', "coc-pyright", "coc-json", "coc-tsserver"]
         ]]
       )
 

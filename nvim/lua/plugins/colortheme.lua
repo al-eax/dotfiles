@@ -1,4 +1,6 @@
 vim.api.nvim_create_user_command('Theme', ":Telescope colorscheme", {})
+vim.api.nvim_create_user_command('Td', ":lua vim.cmd('colorscheme github_dark_colorblind')", {})
+vim.api.nvim_create_user_command('Tl', ":lua vim.cmd('colorscheme github_light_colorblind')", {})
 vim.opt.termguicolors = true
 
 
@@ -24,5 +26,5 @@ return {
 
     vim.cmd('colorscheme github_dark_colorblind')
   end,
-}
+  }
 }
