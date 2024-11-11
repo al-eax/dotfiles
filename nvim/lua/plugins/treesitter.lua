@@ -56,8 +56,26 @@ return {
                 -- When separator is set, the context will only show up when there are at least 2 lines above cursorline.
                 separator = nil,
                 zindex = 20, -- The Z-index of the context window
-                on_attach = nil, -- (fun(buf: integer): boolean) return false to disable attaching
+                on_attach = function(buf)
+                    local max_filesize = 10 * 1024 -- 100 KB
+                    local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+                    if ok and stats and stats.size > max_filesize then
+                        vim.print("disable TREESITTER")
+                        vim.cmd(":TSContextDisable")
+                        return false
+                    else
+                        vim.cmd(":TSContextEnable")
+                        vim.print("enable treesitter")
+                        return true
+                    end
+                  end
             }
+
+          vim.api.nvim_create_autocmd("WinEnter", {
+            callback = function()
+              vim.cmd("TSContextEnable")
+              end,
+          })
         end
     }
 }

@@ -5,6 +5,7 @@ vim.cmd(
   let g:minimap_auto_start_win_enter = 1
 ]]
 )
+
 return {
   {
     enabled = false, -- doesnt work with coc, only works with lsp
@@ -55,8 +56,25 @@ return {
        })
     end
   } ,
+--     {
+--     "wellle/context.vim", -- show current context (class/func) at top of the window
+--     config = function()
+--       vim.cmd(
+--         [[
+--
+-- let g:context_enabled = 1
+-- let g:context_throttle = 100  " Kontrolle der Aktualisierungsfrequenz
+-- let g:context_add_mappings = 0
+-- let g:context_max_lines = 3   " Maximiere die angezeigten Zeilen für context.vim
+-- let g:context_type = 'virtual'  " Kann 'floating' sein, falls du Popups wünschst
+-- autocmd VimEnter * call context#move('#', 'below')
+--         ]]
+--       )
+--     end
+--
+--   },
   {
-    'Bekaboo/dropbar.nvim',
+    'Bekaboo/dropbar.nvim', -- show current file path in header
     -- optional, but required for fuzzy finder support
     dependencies = {
       'nvim-telescope/telescope-fzf-native.nvim'
@@ -68,5 +86,41 @@ return {
           }
         })
     end
-  }
+  },
+
+  -- {
+  --   "psf/black", -- python code formating: install black systemwide python -m pip install black
+  --   config = function()
+  --     vim.cmd(
+  --       [[
+  --         let g:black_use_virtualenv = 0
+  --         augroup black_on_save
+  --           autocmd!
+  --           autocmd BufWritePre *.py Black
+  --         augroup end
+  --       ]]
+  --     )
+  --   end
+  -- }
+  {
+    "hedyhli/outline.nvim", -- display classes & functions of the current file
+    config = function()
+      -- Example mapping to toggle outline
+      vim.keymap.set("n", "<leader>o", "<cmd>Outline<CR>",
+      { desc = "Toggle Outline" })
+
+      require("outline").setup {
+        -- Your setup opts here (leave empty to use defaults)
+        symbols = {
+          filter = {
+            default = { 'String', exclude=true , "Function"},
+            -- default = { 'Function', 'Class' },
+          }
+        },
+        preview_window = {
+          auto_preview = true,
+        },
+      }
+    end,  
+  },
 }

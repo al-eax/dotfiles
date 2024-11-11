@@ -61,19 +61,20 @@ vim.keymap.set("n", "<esc>", "<esc>:noh<CR>", { noremap = true })
 -- window functions
 vim.keymap.set("n", "<leader>w", "<C-W>")
 vim.keymap.set("n", "<leader>wv", "<C-W>v") -- split window vertival
-vim.keymap.set("n", "<leader>ws", "<C-W>s") -- split window vertival
 vim.keymap.set("n", "<leader>wH", "<C-W>s") -- split window vertival
 vim.keymap.set("n", "<leader>wV", "<C-W>s") -- split window vertival
-vim.keymap.set("n", "<leader>ws", "<C-W>s") -- split window vertival
 vim.keymap.set("n", "<leader>wq", "<C-W>q") -- close current window
 
 
 -- resize window
 vim.keymap.set("n", "<leader>w+", [[<cmd>vertical resize +5<cr>]]) -- make the window biger vertically
 vim.keymap.set("n", "<leader>w-", [[<cmd>vertical resize -5<cr>]]) -- make the window smaller vertically
-vim.keymap.set("n", "<leader>w*", [[<cmd>horizontal resize +2<cr>]]) -- make the window bigger horizontally
-vim.keymap.set("n", "<leader>w_", [[<cmd>horizontal resize -2<cr>]]) -- make the window smaller horizontally
+vim.keymap.set("n", "<leader>w*", [[<cmd>horizontal resize +5<cr>]]) -- make the window bigger horizontally
+vim.keymap.set("n", "<leader>w_", [[<cmd>horizontal resize -5<cr>]]) -- make the window smaller horizontally
 
+vim.keymap.set("n", "<c-w-h>", [[<cmd>vertical resize +5<cr>]]) -- make the window biger vertically
+vim.keymap.set("n", "<c-w-j>", [[<cmd>horizontal resize +5<cr>]]) -- make the window biger vertically
+--
 -- tabs
 vim.keymap.set("n", "<leader>th", ":tabprev<cr>", {})
 vim.keymap.set("n", "<leader>tl", ":tabnext<cr>", {})
@@ -87,6 +88,7 @@ vim.keymap.set("n", "<leader>tq", ":tabclose<cr>", {})
 vim.keymap.set("n", "Q", "q1")
 vim.keymap.set("n", "@", "@1", { noremap = true })
 
+-- movement 
 vim.keymap.set({ "n", "v" }, "J", "10j")
 vim.keymap.set({ "n", "v" }, "K", "10k",{ noremap = false, silent = true })
 

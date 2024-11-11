@@ -54,6 +54,7 @@ return {
       vim.keymap.set("n","<space>gd", ":Gdiff<CR>")
       vim.keymap.set("n","<space>gD", ":Gdifff<CR>")
       vim.keymap.set("n","<space>gr", ":Greset<CR>")
+      vim.keymap.set("n","<space>gb", ":Gitsigns blame<CR>")
 
     end
   },

@@ -49,8 +49,8 @@ return{
         config = function()
             -- pyright & debugpy was downloaded by mason, we have to select masoons venv
             if vim.g.is_windows then
-                local mason_python_path = [[C:\Users\ahh\AppData\Local\nvim-data\mason\packages\debugpy\venv\Scripts\python.exe]]
-                require("dap-python").setup(mason_python_path)
+                --local mason_python_path = [[C:\Users\ahh\AppData\Local\nvim-data\mason\packages\debugpy\venv\Scripts\python.exe]]
+                require("dap-python").setup("python")
             else
                 local mason_python_path = "~/.local/share/nvim/mason/packages/debugpy/venv/bin/python3"
                 require("dap-python").setup(mason_python_path)
