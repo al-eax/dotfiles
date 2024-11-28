@@ -56,7 +56,7 @@ nnoremap <leader>D "*D
 vnoremap <leader>d "*d
 
 " press vv to select the whole Line
-nnoremap vv V
+nnoremap vv v$
 
 
 " <leader>r search & replace only in visualy selected text

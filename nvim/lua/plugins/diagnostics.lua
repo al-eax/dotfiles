@@ -61,13 +61,12 @@ return {
 --     config = function()
 --       vim.cmd(
 --         [[
---
--- let g:context_enabled = 1
--- let g:context_throttle = 100  " Kontrolle der Aktualisierungsfrequenz
--- let g:context_add_mappings = 0
--- let g:context_max_lines = 3   " Maximiere die angezeigten Zeilen für context.vim
--- let g:context_type = 'virtual'  " Kann 'floating' sein, falls du Popups wünschst
--- autocmd VimEnter * call context#move('#', 'below')
+          -- let g:context_enabled = 1
+          -- let g:context_throttle = 100  " Kontrolle der Aktualisierungsfrequenz
+          -- let g:context_add_mappings = 0
+          -- let g:context_max_lines = 3   " Maximiere die angezeigten Zeilen für context.vim
+          -- let g:context_type = 'virtual'  " Kann 'floating' sein, falls du Popups wünschst
+          -- autocmd VimEnter * call context#move('#', 'below')
 --         ]]
 --       )
 --     end
@@ -80,11 +79,10 @@ return {
       'nvim-telescope/telescope-fzf-native.nvim'
     },
     config = function()
+      local utils = require('dropbar.sources')
       require('dropbar').setup({
-        general = {
-            enable = true
-          }
-        })
+        general = {enable = true },
+      })
     end
   },
 
@@ -92,7 +90,7 @@ return {
   --   "psf/black", -- python code formating: install black systemwide python -m pip install black
   --   config = function()
   --     vim.cmd(
-  --       [[
+  --       [
   --         let g:black_use_virtualenv = 0
   --         augroup black_on_save
   --           autocmd!
@@ -113,7 +111,7 @@ return {
         -- Your setup opts here (leave empty to use defaults)
         symbols = {
           filter = {
-            default = { 'String', exclude=true , "Function"},
+            default = { 'String', exclude=true},
             -- default = { 'Function', 'Class' },
           }
         },
