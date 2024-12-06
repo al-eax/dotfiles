@@ -70,19 +70,18 @@ return{
             ConfigureCsWorkspacesProject()
 
             vim.fn.sign_define('DapBreakpoint', { text = '🔴', texthl = '', linehl = '', numhl = '' })
-            vim.fn.sign_define('DapStopped', { text = '▶', texthl = '', linehl = '', numhl = '' })
+            vim.fn.sign_define('DapStopped', { text = '▶', texthl = 'DiagnosticSignWarn', linehl = 'Visual', numhl = 'DiagnosticSignWarn' })
 
             vim.keymap.set("n", "<leader>b", ":lua require'dap'.toggle_breakpoint()<cr>", { desc = "[D]ebug: toggle [B]reakpoint" })
-            --vim.keymap.set("n", "<leader>dc", ":lua require'dap'.continue()<cr>", { desc = "[D]ebug: [C]ontinue/Start" })
+            vim.keymap.set("n", "<leader>db", ":lua require'dap'.toggle_breakpoint()<cr>", { desc = "[D]ebug: toggle [B]reakpoint" })
+            vim.keymap.set("n", "<leader>dc", ":lua require'dap'.continue()<cr>", { desc = "[D]ebug: [C]ontinue/Start" })
             vim.keymap.set("n", "<F5>", ":lua require'dap'.continue()<cr>")
-
             vim.keymap.set("n", "<F6>", ":lua require'dap'.step_over()<cr>")
             vim.keymap.set("n", "<F7>", ":lua require'dap'.step_into()<cr>")
             vim.keymap.set("n", "<F10>", ":lua require'dap'.step_over()<cr>")
             vim.keymap.set("n", "<F11>", ":lua require'dap'.step_into()<cr>")
         end
     },
-    
     { 
        'rcarriga/nvim-dap-ui',
         config = function()
@@ -90,8 +89,6 @@ return{
             dapui.setup()
             
             local dap = require("dap")
-            
-          
             
             dap.listeners.after.event_initialized["dapui_config"] = function()
                 dapui.open()
@@ -105,6 +102,7 @@ return{
 
             vim.api.nvim_create_user_command('Dap', dapui.toggle, {}) -- toggle dapui
             vim.keymap.set("n", "<leader>de", ":lua require'dapui'.eval()<cr>", { desc = "[D]ebug: [Eval] current cursor position" })
+            vim.keymap.set("n", "<leader>dh", ":lua require'dapui'.eval()<cr>", { desc = "[D]ebug: [Eval] current cursor position" })
             vim.keymap.set("n", "<leader>du",dapui.toggle)
         end
     },
