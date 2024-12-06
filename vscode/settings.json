@@ -111,6 +111,6 @@
   "extensions.experimental.affinity": {
     "asvetliakov.vscode-neovim": 1
   },
-  "workbench.colorTheme": "Default Light Modern",
+  "workbench.colorTheme": "GitHub Dark Colorblind (Beta)",
   "git.confirmSync": false
 }
