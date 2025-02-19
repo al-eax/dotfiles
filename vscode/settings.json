@@ -84,6 +84,45 @@
       "commands" : [
         "editor.action.quickFix"
       ]
+    },{
+      "before" : [ // switch to left window
+          "<leader>",
+          "w",
+          "h"
+      ],
+      "commands" : [
+          "workbench.action.navigateLeft"
+      ]
+    },
+    {
+      "before" : [ // switch to left window
+          "<leader>",
+          "w",
+          "l"
+      ],
+      "commands" : [
+          "workbench.action.navigateRight"
+      ]
+    },
+    {
+      "before" : [ // switch to left window
+          "<leader>",
+          "w",
+          "j"
+      ],
+      "commands" : [
+          "workbench.action.navigateDown"
+      ]
+    },
+        {
+      "before" : [ // switch to left window
+          "<leader>",
+          "w",
+          "j"
+      ],
+      "commands" : [
+          "workbench.action.navigateUp"
+      ]
     }
   ],
   "vim.hlsearch": true,
