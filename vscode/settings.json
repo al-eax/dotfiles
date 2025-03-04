@@ -95,7 +95,7 @@
       ]
     },
     {
-      "before" : [ // switch to left window
+      "before" : [ // switch to right window
           "<leader>",
           "w",
           "l"
@@ -105,23 +105,23 @@
       ]
     },
     {
-      "before" : [ // switch to left window
+      "before" : [ // switch to upper window
+          "<leader>",
+          "w",
+          "k"
+      ],
+      "commands" : [
+          "workbench.action.navigateUp"
+      ]
+    },
+        {
+      "before" : [ // switch to lower window
           "<leader>",
           "w",
           "j"
       ],
       "commands" : [
           "workbench.action.navigateDown"
-      ]
-    },
-        {
-      "before" : [ // switch to left window
-          "<leader>",
-          "w",
-          "j"
-      ],
-      "commands" : [
-          "workbench.action.navigateUp"
       ]
     }
   ],
