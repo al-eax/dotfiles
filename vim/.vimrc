@@ -56,7 +56,7 @@ nnoremap <leader>D "*D
 vnoremap <leader>d "*d
 
 " press vv to select the whole Line
-nnoremap vv v$
+nnoremap vv v$h
 
 
 " <leader>r search & replace only in visualy selected text
@@ -135,3 +135,6 @@ inoremap <A-l> <Right>
 nnoremap <BS> "_X
 vnoremap <BS> "_X
 
+nnoremap ' * "use # and ' to find current word
+
+nnoremap <ESC> <esc>:noh<CR>

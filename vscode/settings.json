@@ -1,3 +1,4 @@
+//test
 {
   "editor.lineNumbers": "on",
   "security.workspace.trust.untrustedFiles": "open",
@@ -29,6 +30,21 @@
       "commands": [
         "bookmarks.toggle"
       ]
+    },{
+        "before" : [
+          "m", "n"
+        ],
+        "commands" : [
+            "-bookmarks.jumpToPrevious"
+        ]
+    },
+    {
+        "before" : [
+          "m", "p"
+        ],
+        "commands" : [
+            "bookmarks.jumpToPrevious"
+        ]
     },
     {
       "before": [ // create annotated bookmark
@@ -84,6 +100,26 @@
       "commands" : [
         "editor.action.quickFix"
       ]
+    },
+    {
+      "before" : [ // jump to right window
+        "<leader>",
+        "w",
+        "h"
+      ],
+      "commands" : [
+        "workbench.action.focusLeftGroup"
+      ]
+    },
+    {
+      "before" : [ // jump to left window
+        "<leader>",
+        "w",
+        "l"
+      ],
+      "commands" : [
+        "workbench.action.focusRightGroup"
+      ]
     }
   ],
   "vim.hlsearch": true,
@@ -101,9 +137,9 @@
     "--disable=R0912", // pylint too-many-branches R0912
     "--disable=R0913", // pylint too-many-arguments R0913
     "--disable=R0902", // too-many-instance-attributes
-    "--disable=R0911", // too-many-return-statements
-    "--disable=C0114", // missing-module-docstring / C0114
-    "--disable=C0115", // missing class doc string
+    "--disable=R0911", // too-many-return-statements,
+    "--disable=invalid-name", // 
+    "--missing-function-docstring" //
   ],
   "debug.inlineValues": "off",
   "editor.minimap.showSlider": "always",
