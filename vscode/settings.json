@@ -100,25 +100,44 @@
       "commands" : [
         "editor.action.quickFix"
       ]
-    },
-    {
-      "before" : [ // jump to right window
-        "<leader>",
-        "w",
-        "h"
+    },{
+      "before" : [ // switch to left window
+          "<leader>",
+          "w",
+          "h"
       ],
       "commands" : [
-        "workbench.action.focusLeftGroup"
+          "workbench.action.navigateLeft"
       ]
     },
     {
-      "before" : [ // jump to left window
-        "<leader>",
-        "w",
-        "l"
+      "before" : [ // switch to right window
+          "<leader>",
+          "w",
+          "l"
       ],
       "commands" : [
-        "workbench.action.focusRightGroup"
+          "workbench.action.navigateRight"
+      ]
+    },
+    {
+      "before" : [ // switch to upper window
+          "<leader>",
+          "w",
+          "k"
+      ],
+      "commands" : [
+          "workbench.action.navigateUp"
+      ]
+    },
+    {
+      "before" : [ // switch to lower window
+          "<leader>",
+          "w",
+          "j"
+      ],
+      "commands" : [
+          "workbench.action.navigateDown"
       ]
     }
   ],
@@ -147,6 +166,6 @@
   "extensions.experimental.affinity": {
     "asvetliakov.vscode-neovim": 1
   },
-  "workbench.colorTheme": "Default Light Modern",
+  "workbench.colorTheme": "GitHub Dark Colorblind (Beta)",
   "git.confirmSync": false
 }
